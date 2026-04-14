@@ -1,0 +1,25 @@
+---
+license: mit
+tags:
+  - machine-learning
+library_name: pytorch
+---
+
+# Model Card
+
+{{ model_description }}
+
+## Metrics
+
+{{ metrics_table }}
+
+## Usage
+
+```python
+from huggingface_hub import snapshot_download
+local = snapshot_download("REPO_ID")
+```
+
+## Source
+
+{{ github_url }}

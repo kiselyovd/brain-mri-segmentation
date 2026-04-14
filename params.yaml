@@ -1,0 +1,6 @@
+model:
+name: segformer_b2
+lr: 1e-4
+trainer:
+  max_epochs: 30
+seed: 42
