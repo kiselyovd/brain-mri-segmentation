@@ -1,13 +1,24 @@
 ---
 license: mit
 tags:
-  - machine-learning
+  - semantic-segmentation
+  - medical-imaging
+  - brain-mri
+  - pytorch-lightning
+  - segformer
 library_name: pytorch
+datasets:
+  - mateuszbuda/lgg-mri-segmentation
+pipeline_tag: image-segmentation
 ---
 
-# Model Card
+# brain-mri-segmentation
 
 {{ model_description }}
+
+Binary semantic segmentation of brain-tumor regions (low-grade glioma) from FLAIR MRI slices. Main model: SegFormer-B2 fine-tuned on the Mateusz Buda LGG MRI dataset (TCGA, 110 patients, 3 929 paired slices) with a patient-level 80/10/10 split. Baseline: hand-rolled U-Net (4 levels, 32→256 ch, ~1.9 M params).
+
+Output is a binary mask at 256 × 256 resolution (1 = tumor, 0 = background).
 
 ## Metrics
 
@@ -17,8 +28,18 @@ library_name: pytorch
 
 ```python
 from huggingface_hub import snapshot_download
-local = snapshot_download("REPO_ID")
+
+from brain_mri_segmentation.inference.predict import load_model, predict
+
+ckpt_dir = snapshot_download("kiselyovd/brain-mri-segmentation")
+model = load_model(f"{ckpt_dir}/best.ckpt")
+result = predict(model, "path/to/slice.png")
+# {"mask": [[0, 0, 1, ...], ...], "shape": [256, 256]}
 ```
+
+## Intended use
+
+Research and educational purposes only. **This is not a medical device.** Do not use for clinical decision-making. The model was trained on a single publicly available dataset and has not been validated against clinical ground truth, population diversity, acquisition-device variation, or downstream clinical workflows.
 
 ## Source
 
