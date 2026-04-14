@@ -1,4 +1,5 @@
 """FastAPI routes."""
+
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, UploadFile
@@ -20,7 +21,9 @@ def health() -> HealthResponse:
     except Exception:
         loaded = False
     return HealthResponse(
-        status="ok" if loaded else "degraded", model_loaded=loaded, version=__version__,
+        status="ok" if loaded else "degraded",
+        model_loaded=loaded,
+        version=__version__,
     )
 
 

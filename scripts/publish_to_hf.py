@@ -1,4 +1,5 @@
 """Upload trained artifacts to HuggingFace Hub."""
+
 from __future__ import annotations
 
 import argparse
@@ -57,13 +58,15 @@ def main() -> None:
             metrics,
             tmp_path / "README.md",
             model_description="Production-grade binary brain-tumor MRI segmentation (LGG / TCGA).",
-            github_url=f"https://github.com/kiselyovd/brain-mri-segmentation",
+            github_url="https://github.com/kiselyovd/brain-mri-segmentation",
         )
         api = HfApi(token=os.environ.get("HF_TOKEN"))
         api.create_repo(repo_id=args.repo_id, exist_ok=True)
         commit_message = f"Release {args.tag}" if args.tag else "Upload artifacts"
         api.upload_folder(
-            repo_id=args.repo_id, folder_path=str(tmp_path), commit_message=commit_message,
+            repo_id=args.repo_id,
+            folder_path=str(tmp_path),
+            commit_message=commit_message,
         )
     print(f"Published to https://huggingface.co/{args.repo_id}")
 

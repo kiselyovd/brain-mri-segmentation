@@ -1,4 +1,5 @@
 """Inference CLI — load a checkpoint and predict a binary mask."""
+
 from __future__ import annotations
 
 import argparse
@@ -21,7 +22,9 @@ def load_model(checkpoint_path: str | Path):
     model_name = hp.get("model_name")
     num_classes = hp.get("num_classes")
     if model_name is None or num_classes is None:
-        raise ValueError("Checkpoint missing model_name/num_classes hparams — re-train after upgrade.")
+        raise ValueError(
+            "Checkpoint missing model_name/num_classes hparams — re-train after upgrade."
+        )
     backbone = build_model(model_name, num_classes=num_classes, pretrained=False)
     return SegmentationModule.load_from_checkpoint(str(checkpoint_path), model=backbone)
 

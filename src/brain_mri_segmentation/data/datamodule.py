@@ -1,4 +1,5 @@
 """Lightning DataModule for binary brain-MRI segmentation."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -26,7 +27,9 @@ class SegmentationDataModule(L.LightningDataModule):
 
     def setup(self, stage: str | None = None) -> None:
         root = Path(self.hparams.data_dir)
-        self.train_ds = SegmentationDataset(root / "train", image_size=self.hparams.image_size, augment=True)
+        self.train_ds = SegmentationDataset(
+            root / "train", image_size=self.hparams.image_size, augment=True
+        )
         self.val_ds = SegmentationDataset(root / "val", image_size=self.hparams.image_size)
         self.test_ds = SegmentationDataset(root / "test", image_size=self.hparams.image_size)
 
@@ -40,7 +43,11 @@ class SegmentationDataModule(L.LightningDataModule):
         )
 
     def val_dataloader(self) -> DataLoader:
-        return DataLoader(self.val_ds, batch_size=self.hparams.batch_size, num_workers=self.hparams.num_workers)
+        return DataLoader(
+            self.val_ds, batch_size=self.hparams.batch_size, num_workers=self.hparams.num_workers
+        )
 
     def test_dataloader(self) -> DataLoader:
-        return DataLoader(self.test_ds, batch_size=self.hparams.batch_size, num_workers=self.hparams.num_workers)
+        return DataLoader(
+            self.test_ds, batch_size=self.hparams.batch_size, num_workers=self.hparams.num_workers
+        )

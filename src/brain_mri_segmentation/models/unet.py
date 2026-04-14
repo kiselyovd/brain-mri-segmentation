@@ -1,4 +1,5 @@
 """Small U-Net (4 levels, 32->256 ch) for binary segmentation."""
+
 from __future__ import annotations
 
 import torch

@@ -1,4 +1,5 @@
 """Patient-level train/val/test split for the LGG Brain MRI dataset."""
+
 from __future__ import annotations
 
 import random
@@ -35,8 +36,8 @@ def prepare_data(
     rng.shuffle(patients)
 
     n_total = len(patients)
-    n_val = max(1, int(round(n_total * val_frac)))
-    n_test = max(1, int(round(n_total * test_frac)))
+    n_val = max(1, round(n_total * val_frac))
+    n_test = max(1, round(n_total * test_frac))
     n_train = n_total - n_val - n_test
 
     splits: dict[str, list[Path]] = {

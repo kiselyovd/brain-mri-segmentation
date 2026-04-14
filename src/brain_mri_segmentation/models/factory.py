@@ -1,4 +1,5 @@
 """Model factory — returns a segmentation model by name."""
+
 from __future__ import annotations
 
 from torch import nn

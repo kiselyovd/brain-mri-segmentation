@@ -1,4 +1,5 @@
 """Data layer smoke tests."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -22,7 +23,8 @@ def test_prepare_splits_by_patient(tmp_path: Path) -> None:
 
     for patient in ("TCGA_A", "TCGA_B", "TCGA_C", "TCGA_D", "TCGA_E"):
         splits_with_patient = {
-            split for split in ("train", "val", "test")
+            split
+            for split in ("train", "val", "test")
             if list((out / split / "images").glob(f"{patient}_*.tif"))
         }
         assert len(splits_with_patient) == 1, (
@@ -31,5 +33,7 @@ def test_prepare_splits_by_patient(tmp_path: Path) -> None:
 
     for split in ("train", "val", "test"):
         imgs = sorted(p.stem for p in (out / split / "images").glob("*.tif"))
-        msks = sorted(p.stem.removesuffix("_mask") for p in (out / split / "masks").glob("*_mask.tif"))
+        msks = sorted(
+            p.stem.removesuffix("_mask") for p in (out / split / "masks").glob("*_mask.tif")
+        )
         assert imgs == msks

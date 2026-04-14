@@ -1,4 +1,5 @@
 """Populate data/sample/{images,masks}/ with a tiny paired subset for CI."""
+
 from __future__ import annotations
 
 import argparse

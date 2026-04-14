@@ -1,4 +1,5 @@
 """Paired (image, mask) TIF dataset for binary segmentation."""
+
 from __future__ import annotations
 
 from pathlib import Path
