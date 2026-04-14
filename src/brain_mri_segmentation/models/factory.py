@@ -1,19 +1,26 @@
-"""Model factory — returns a torch.nn.Module by name."""
+"""Model factory — returns a segmentation model by name."""
 from __future__ import annotations
 
 from torch import nn
 
+
 def build_model(name: str, num_classes: int, pretrained: bool = True) -> nn.Module:
     if name == "segformer_b2":
-        from transformers import SegformerForSemanticSegmentation
+        from transformers import SegformerConfig, SegformerForSemanticSegmentation
 
-        return SegformerForSemanticSegmentation.from_pretrained(
+        config = SegformerConfig.from_pretrained(
             "nvidia/segformer-b2-finetuned-ade-512-512",
             num_labels=num_classes,
-            ignore_mismatched_sizes=True,
         )
-    if name == "unet":
-        from torchvision.models.segmentation import deeplabv3_resnet50
+        if pretrained:
+            return SegformerForSemanticSegmentation.from_pretrained(
+                "nvidia/segformer-b2-finetuned-ade-512-512",
+                num_labels=num_classes,
+                ignore_mismatched_sizes=True,
+            )
+        return SegformerForSemanticSegmentation(config)
+    if name == "unet_small":
+        from .unet import UNet
 
-        return deeplabv3_resnet50(num_classes=num_classes, weights_backbone=None)
+        return UNet(num_classes=num_classes)
     raise ValueError(f"Unknown model: {name}")
