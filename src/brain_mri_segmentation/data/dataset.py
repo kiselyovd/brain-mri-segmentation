@@ -1,38 +1,41 @@
-"""Dataset implementations."""
+"""Paired (image, mask) TIF dataset for binary segmentation."""
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Callable
 
+import numpy as np
+import torch
 from PIL import Image
 from torch.utils.data import Dataset
+from torchvision.transforms import v2
 
-class ImageDataset(Dataset):
-    """Generic image dataset with class-subdir layout."""
 
-    def __init__(
-        self,
-        root: Path | str,
-        transform: Callable | None = None,
-        extensions: tuple[str, ...] = (".jpg", ".jpeg", ".png", ".tif", ".tiff"),
-    ) -> None:
-        self.root = Path(root)
-        self.transform = transform
-        self.samples: list[tuple[Path, int]] = []
-        classes = sorted(p.name for p in self.root.iterdir() if p.is_dir())
-        self.class_to_idx = {c: i for i, c in enumerate(classes)}
-        for cls, idx in self.class_to_idx.items():
-            for ext in extensions:
-                self.samples.extend(
-                    (p, idx) for p in (self.root / cls).glob(f"**/*{ext}")
-                )
+class SegmentationDataset(Dataset):
+    def __init__(self, split_dir: Path | str, image_size: int = 256, augment: bool = False) -> None:
+        self.root = Path(split_dir)
+        self.image_paths = sorted((self.root / "images").glob("*.tif"))
+        self.image_size = image_size
+        self.augment = augment
 
     def __len__(self) -> int:
-        return len(self.samples)
+        return len(self.image_paths)
 
-    def __getitem__(self, idx: int) -> tuple:
-        path, label = self.samples[idx]
-        img = Image.open(path).convert("RGB")
-        if self.transform is not None:
-            img = self.transform(img)
-        return img, label
+    def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor]:
+        img_path = self.image_paths[idx]
+        mask_path = self.root / "masks" / f"{img_path.stem}_mask.tif"
+
+        img = Image.open(img_path).convert("RGB")
+        mask = Image.open(mask_path).convert("L")
+
+        img_arr = np.asarray(img, dtype=np.float32) / 255.0
+        mask_arr = (np.asarray(mask, dtype=np.uint8) > 0).astype(np.int64)
+
+        img_t = torch.from_numpy(img_arr).permute(2, 0, 1)
+        mask_t = torch.from_numpy(mask_arr)
+
+        img_t = v2.Resize((self.image_size, self.image_size), antialias=True)(img_t)
+        mask_t = v2.Resize(
+            (self.image_size, self.image_size),
+            interpolation=v2.InterpolationMode.NEAREST,
+        )(mask_t.unsqueeze(0)).squeeze(0)
+        return img_t, mask_t

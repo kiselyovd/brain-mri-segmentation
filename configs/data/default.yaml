@@ -1,6 +1,5 @@
 data_dir: data/processed
-batch_size: 32
+batch_size: 16
 num_workers: 4
-image_size: 224
-val_split: 0.1
+image_size: 256
 seed: ${seed}

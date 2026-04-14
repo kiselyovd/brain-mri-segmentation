@@ -1,5 +1,7 @@
 """Data layer."""
 from __future__ import annotations
 
-from .dataset import ImageDataset
-from .datamodule import ImageDataModule
+from .datamodule import SegmentationDataModule
+from .dataset import SegmentationDataset
+
+__all__ = ["SegmentationDataModule", "SegmentationDataset"]
