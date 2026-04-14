@@ -21,11 +21,10 @@ def main(cfg: DictConfig) -> None:
     from lightning.pytorch.callbacks import EarlyStopping, ModelCheckpoint
     from lightning.pytorch.loggers import MLFlowLogger
 
-    from ..models import build_model
-    from ..data import ImageDataModule
-    from ..models import SegmentationModule
+    from ..data import SegmentationDataModule
+    from ..models import SegmentationModule, build_model
 
-    dm = ImageDataModule(**cfg.data)
+    dm = SegmentationDataModule(**cfg.data)
     net = build_model(cfg.model.name, num_classes=cfg.model.num_classes)
     lit = SegmentationModule(
         net,
