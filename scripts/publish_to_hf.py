@@ -25,7 +25,10 @@ def render_model_card(template_path: Path, metrics: dict, out_path: Path, **extr
         keep_trailing_newline=True,
     )
     tpl = env.get_template(template_path.name)
-    out_path.write_text(tpl.render(metrics_table=_format_metrics(metrics), **extra))
+    out_path.write_text(
+        tpl.render(metrics_table=_format_metrics(metrics), **extra),
+        encoding="utf-8",
+    )
 
 
 def main() -> None:
