@@ -1,24 +1,41 @@
 ---
 license: mit
-tags:
-  - semantic-segmentation
-  - medical-imaging
-  - brain-mri
-  - pytorch-lightning
-  - segformer
-library_name: pytorch
-datasets:
-  - mateuszbuda/lgg-mri-segmentation
-pipeline_tag: image-segmentation
+library_name: {{ library_name }}
+
+pipeline_tag: {{ pipeline_tag }}
+
+{% if base_model %}base_model: {{ base_model }}
+{% endif %}tags:
+{% for tag in tags %}  - {{ tag }}
+{% endfor %}datasets:
+{% for ds in datasets %}  - {{ ds }}
+{% endfor %}
+metrics:
+  - dice
+  - iou
+
+{% if widget_examples %}widget:
+{% for ex in widget_examples %}  - src: {{ ex.src }}
+    title: {{ ex.title }}
+{% endfor %}{% endif %}
+
+model-index:
+  - name: {{ repo_id }}
+    results:
+{% for task_result in metric_results %}      - task:
+          type: {{ task_result.task_type }}
+        dataset:
+          type: {{ task_result.dataset_type }}
+          name: {{ task_result.dataset_name }}
+        metrics:
+{% for m in task_result.metrics %}          - type: {{ m.type }}
+            value: {{ m.value }}
+{% endfor %}{% endfor %}
 ---
 
 # brain-mri-segmentation
 
 {{ model_description }}
-
-Binary semantic segmentation of brain-tumor regions (low-grade glioma) from FLAIR MRI slices. Main model: SegFormer-B2 fine-tuned on the Mateusz Buda LGG MRI dataset (TCGA, 110 patients, 3 929 paired slices) with a patient-level 80/10/10 split. Baseline: hand-rolled U-Net (4 levels, 32→256 ch, ~1.9 M params).
-
-Output is a binary mask at 256 × 256 resolution (1 = tumor, 0 = background).
 
 ## Metrics
 
@@ -26,21 +43,35 @@ Output is a binary mask at 256 × 256 resolution (1 = tumor, 0 = background).
 
 ## Usage
 
+
 ```python
-from huggingface_hub import snapshot_download
+from transformers import AutoImageProcessor, AutoModelForSemanticSegmentation
+import torch
+from PIL import Image
 
-from brain_mri_segmentation.inference.predict import load_model, predict
+processor = AutoImageProcessor.from_pretrained("{{ repo_id }}")
+model = AutoModelForSemanticSegmentation.from_pretrained("{{ repo_id }}")
 
-ckpt_dir = snapshot_download("kiselyovd/brain-mri-segmentation")
-model = load_model(f"{ckpt_dir}/best.ckpt")
-result = predict(model, "path/to/slice.png")
-# {"mask": [[0, 0, 1, ...], ...], "shape": [256, 256]}
+image = Image.open("your_image.png")
+inputs = processor(images=image, return_tensors="pt")
+with torch.no_grad():
+    outputs = model(**inputs)
+logits = outputs.logits  # shape (batch_size, num_labels, height, width)
 ```
 
-## Intended use
 
-Research and educational purposes only. **This is not a medical device.** Do not use for clinical decision-making. The model was trained on a single publicly available dataset and has not been validated against clinical ground truth, population diversity, acquisition-device variation, or downstream clinical workflows.
+## Training Data
 
-## Source
+{% if hf_dataset %}Trained on [{{ dataset_name or hf_dataset }}](https://huggingface.co/datasets/{{ hf_dataset }}).
+{% else %}Training dataset details not specified.
+{% endif %}
 
-{{ github_url }}
+## Source Code
+
+[GitHub Repository]({{ github_url }})
+
+## Intended Use
+
+This model is provided for research and educational purposes. The authors make no warranties about its suitability for any particular application. Users are responsible for evaluating the model's fitness for their use case, including fairness, safety, and compliance with applicable regulations.
+
+> **Note:** This model card was generated from the [ml-project-template](https://github.com/kiselyovd/ml-project-template) scaffold.
