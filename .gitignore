@@ -10,9 +10,14 @@ htmlcov/
 artifacts/
 mlruns/
 wandb/
+multirun/
+lightning_logs/
+*.ckpt
 data/raw/*
 data/processed/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 .env
 .env.local
+outputs/
+logs/
