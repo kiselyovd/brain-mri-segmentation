@@ -13,7 +13,7 @@ from PIL import Image
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--src", default="data/processed/test")
-    parser.add_argument("--dst", default="data/sample/widget")
+    parser.add_argument("--dst", default="data/widget")
     parser.add_argument("-n", type=int, default=3)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--min-tumor-pixels", type=int, default=500)
