@@ -61,7 +61,7 @@ def main(cfg: DictConfig) -> None:
         callbacks=callbacks,
         logger=mlflow_logger,
         log_every_n_steps=cfg.trainer.log_every_n_steps,
-        deterministic=True,
+        deterministic="warn",
     )
     trainer.fit(lit, dm)
     log.info("train.done", ckpt=str(out_dir / "checkpoints" / "best.ckpt"))
