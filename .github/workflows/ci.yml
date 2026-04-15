@@ -23,7 +23,13 @@ jobs:
       - name: Ruff format
         run: uv run ruff format --check .
       - name: Mypy
-        run: uv run mypy src
+        run: uv run mypy src scripts
+      - name: Deptry
+        run: uv run deptry .
+      - name: Bandit
+        run: uv run bandit -r src scripts -c pyproject.toml
+      - name: Interrogate
+        run: uv run interrogate -c pyproject.toml src scripts
       - name: Pytest
         run: uv run pytest
       - name: Upload coverage
@@ -31,6 +37,16 @@ jobs:
         with:
           files: ./coverage.xml
           fail_ci_if_error: false
+
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run actionlint
+        uses: reviewdog/action-actionlint@v1
+        with:
+          reporter: github-pr-check
+          fail_on_error: true
 
   docker-build:
     runs-on: ubuntu-latest

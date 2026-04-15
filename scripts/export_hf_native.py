@@ -1,4 +1,5 @@
 """Export the trained SegFormer backbone into HF-native format (safetensors + config.json)."""
+
 from __future__ import annotations
 
 import argparse
@@ -29,6 +30,7 @@ def main() -> None:
 
     if args.base_model:
         from transformers import AutoImageProcessor
+
         AutoImageProcessor.from_pretrained(args.base_model).save_pretrained(out)
 
     print(f"Exported HF-native model to {out}")

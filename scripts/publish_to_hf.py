@@ -1,4 +1,5 @@
 """Upload trained artifacts to HuggingFace Hub."""
+
 from __future__ import annotations
 
 import argparse
@@ -11,10 +12,10 @@ from pathlib import Path
 from huggingface_hub import HfApi
 from jinja2 import Environment, FileSystemLoader
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def _format_metrics(metrics: dict) -> str:
     if not metrics:
@@ -38,13 +39,17 @@ def _build_tags(domain_tag: str, extra_csv: str, library_name: str) -> list[str]
             t = t.strip()
             if t:
                 tags.add(t)
-    # Always include pytorch if transformers is the library (common pairing)
     if library_name == "transformers":
         tags.add("pytorch")
     return sorted(tags)
 
 
-def _metric_results_from(metrics_json_path: str, pipeline_tag: str, dataset_name: str, dataset_type: str) -> list[dict]:
+def _metric_results_from(
+    metrics_json_path: str,
+    pipeline_tag: str,
+    dataset_name: str,
+    dataset_type: str,
+) -> list[dict]:
     """Read metrics.json and return model-index metric_results structure."""
     path = Path(metrics_json_path)
     if not path.exists():
@@ -56,7 +61,6 @@ def _metric_results_from(metrics_json_path: str, pipeline_tag: str, dataset_name
     numeric = [{"type": k, "value": v} for k, v in raw.items() if isinstance(v, (int, float))]
     if not numeric:
         return []
-    # Map pipeline_tag to a task type understood by HF model-index
     task_type_map = {
         "image-segmentation": "image-segmentation",
         "image-classification": "image-classification",
@@ -74,7 +78,12 @@ def _metric_results_from(metrics_json_path: str, pipeline_tag: str, dataset_name
     ]
 
 
-def render_model_card(template_path: Path, metrics: dict, out_path: Path, **extra) -> None:
+def render_model_card(
+    template_path: Path,
+    metrics: dict,
+    out_path: Path,
+    **extra,
+) -> None:
     env = Environment(
         loader=FileSystemLoader(str(template_path.parent)),
         keep_trailing_newline=True,
@@ -90,28 +99,55 @@ def render_model_card(template_path: Path, metrics: dict, out_path: Path, **extr
 # Main
 # ---------------------------------------------------------------------------
 
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Publish trained artifacts to HuggingFace Hub.")
-    # Existing args
     parser.add_argument("--repo-id", default="kiselyovd/brain-mri-segmentation")
     parser.add_argument("--artifacts", default="artifacts")
     parser.add_argument("--metrics", default="reports/metrics.json")
     parser.add_argument("--template", default="docs/model_card.md.j2")
     parser.add_argument("--tag", default=None)
-    # New args
     parser.add_argument(
         "--widget-sources",
         default=None,
         metavar="DIR",
         help="Directory of widget PNG examples to upload to samples/ in HF repo.",
     )
-    parser.add_argument("--base-model", default="", help="HF base model ID (e.g. nvidia/segformer-b2-...).")
-    parser.add_argument("--hf-dataset", default="", help="HF dataset ID (e.g. user/my-dataset).")
-    parser.add_argument("--dataset-name", default="", help="Human-readable dataset name (defaults to --hf-dataset).")
-    parser.add_argument("--domain-tag", default="", help="Domain tag (e.g. medical, biology).")
-    parser.add_argument("--pipeline-tag", default="", help="HF pipeline tag (e.g. image-segmentation).")
-    parser.add_argument("--library-name", default="transformers", help="Library name pill on HF (default: transformers).")
-    parser.add_argument("--tags", default="", help="Comma-separated extra tags.")
+    parser.add_argument(
+        "--base-model",
+        default="",
+        help="HF base model ID (e.g. nvidia/segformer-b2-...).",
+    )
+    parser.add_argument(
+        "--hf-dataset",
+        default="",
+        help="HF dataset ID (e.g. user/my-dataset).",
+    )
+    parser.add_argument(
+        "--dataset-name",
+        default="",
+        help="Human-readable dataset name (defaults to --hf-dataset).",
+    )
+    parser.add_argument(
+        "--domain-tag",
+        default="",
+        help="Domain tag (e.g. medical, biology).",
+    )
+    parser.add_argument(
+        "--pipeline-tag",
+        default="",
+        help="HF pipeline tag (e.g. image-segmentation).",
+    )
+    parser.add_argument(
+        "--library-name",
+        default="transformers",
+        help="Library name pill on HF (default: transformers).",
+    )
+    parser.add_argument(
+        "--tags",
+        default="",
+        help="Comma-separated extra tags.",
+    )
     parser.add_argument(
         "--hf-export",
         default="artifacts/hf_export",
@@ -129,7 +165,6 @@ def main() -> None:
     if metrics_path.exists():
         metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
 
-    # Build widget_examples list
     widget_examples: list[dict] = []
     if args.widget_sources:
         widget_dir = Path(args.widget_sources)
@@ -147,7 +182,6 @@ def main() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
 
-        # Copy artifacts/ tree
         for item in artifacts_dir.rglob("*"):
             if item.is_file():
                 rel = item.relative_to(artifacts_dir)
@@ -155,7 +189,6 @@ def main() -> None:
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 dest.write_bytes(item.read_bytes())
 
-        # Copy hf_export/ contents to repo root (safetensors, config.json, etc.)
         hf_export_dir = Path(args.hf_export)
         if hf_export_dir.is_dir():
             for item in hf_export_dir.rglob("*"):
@@ -165,7 +198,6 @@ def main() -> None:
                     dest.parent.mkdir(parents=True, exist_ok=True)
                     dest.write_bytes(item.read_bytes())
 
-        # Copy widget PNG samples to samples/ subdirectory
         if args.widget_sources:
             widget_dir = Path(args.widget_sources)
             if widget_dir.is_dir():
@@ -174,12 +206,13 @@ def main() -> None:
                 for png in sorted(widget_dir.glob("*.png")):
                     shutil.copy2(png, samples_dest / png.name)
 
-        # Render model card README.md
         render_model_card(
             template_path=Path(args.template),
             metrics=metrics,
             out_path=tmp_path / "README.md",
-            model_description="Production-grade binary brain-tumor MRI segmentation (LGG / TCGA).",
+            model_description=(
+                "Production-grade binary brain-tumor MRI segmentation (LGG / TCGA)."
+            ),
             github_url="https://github.com/kiselyovd/brain-mri-segmentation",
             repo_id=args.repo_id,
             base_model=args.base_model,

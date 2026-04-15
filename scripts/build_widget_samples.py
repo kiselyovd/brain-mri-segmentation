@@ -1,4 +1,5 @@
 """Convert 3 test slices with visible tumors to PNG for HF widget examples."""
+
 from __future__ import annotations
 
 import argparse
