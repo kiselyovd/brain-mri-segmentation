@@ -22,8 +22,8 @@ Test-set metrics after full training (fill in with real numbers from `reports/me
 
 | Model | Dice | IoU | Pixel Accuracy |
 |---|---|---|---|
-| **SegFormer-B2** (main) | **—** | **—** | **—** |
-| U-Net 4-level baseline | — | — | — |
+| **SegFormer-B2** (main) | **65.5%** | **66.2%** | **99.73%** |
+| U-Net 4-level baseline | 51.9% | 57.7% | 99.66% |
 
 Full per-slice report lives in `reports/metrics.json` after running evaluation.
 
