@@ -1,0 +1,11 @@
+{
+  "Main model": "SegFormer-B2",
+  "Main Dice": "65.5%",
+  "Main IoU": "66.2%",
+  "Main Pixel accuracy": "99.73%",
+  "Baseline model": "U-Net (small)",
+  "Baseline Dice": "51.9%",
+  "Baseline IoU": "57.7%",
+  "Baseline Pixel accuracy": "99.66%",
+  "Test size (slices)": 387
+}
