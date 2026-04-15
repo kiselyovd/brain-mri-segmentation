@@ -137,7 +137,7 @@ def main() -> None:
             widget_examples = [
                 {
                     "src": f"https://huggingface.co/{args.repo_id}/resolve/main/samples/{p.name}",
-                    "title": p.stem,
+                    "example_title": p.stem,
                 }
                 for p in sorted(widget_dir.glob("*.png"))
             ]
