@@ -19,7 +19,10 @@ from jinja2 import Environment, FileSystemLoader
 def _format_metrics(metrics: dict) -> str:
     if not metrics:
         return "TBD"
-    rows = [f"| {k} | {v} |" for k, v in metrics.items()]
+    scalar = {k: v for k, v in metrics.items() if isinstance(v, (int, float, str))}
+    if not scalar:
+        return "TBD"
+    rows = [f"| {k} | {v} |" for k, v in scalar.items()]
     return "| Metric | Value |\n|---|---|\n" + "\n".join(rows)
 
 
