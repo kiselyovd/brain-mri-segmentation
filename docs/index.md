@@ -1,5 +1,7 @@
 # brain-mri-segmentation
 
+![brain-mri-segmentation · SegFormer-B2 tumor mask overlay](images/hero.png)
+
 Production-grade binary semantic segmentation of brain tumors from MRI scans — pixel-level mask prediction for low-grade glioma (LGG) regions.
 
 ![Input / Ground truth / Prediction · SegFormer-B2 · Dice 65.5%](images/mask_overlay.svg)
