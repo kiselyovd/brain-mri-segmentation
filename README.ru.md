@@ -125,6 +125,20 @@ tests/              # pytest
 
 Исследовательский и образовательный проект. **Не является медицинским изделием.** Предсказания модели запрещается использовать для принятия клинических решений.
 
+Известные ограничения и режимы отказа — в [docs/LIMITATIONS.md](docs/LIMITATIONS.md).
+
+## Цитирование
+
+```bibtex
+@software{kiselyov2026brainmri,
+  author  = {Kiselyov, Daniil},
+  title   = {brain-mri-segmentation: SegFormer-B2 brain tumor MRI segmentation},
+  year    = {2026},
+  url     = {https://github.com/kiselyovd/brain-mri-segmentation},
+  version = {v0.1.0}
+}
+```
+
 ## Лицензия
 
 MIT — см. [LICENSE](LICENSE).

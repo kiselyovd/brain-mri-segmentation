@@ -2,11 +2,14 @@
 
 [![CI](https://github.com/kiselyovd/brain-mri-segmentation/actions/workflows/ci.yml/badge.svg)](https://github.com/kiselyovd/brain-mri-segmentation/actions/workflows/ci.yml)
 [![Docs](https://github.com/kiselyovd/brain-mri-segmentation/actions/workflows/docs.yml/badge.svg)](https://kiselyovd.github.io/brain-mri-segmentation/)
+[![codecov](https://codecov.io/gh/kiselyovd/brain-mri-segmentation/branch/main/graph/badge.svg)](https://codecov.io/gh/kiselyovd/brain-mri-segmentation)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12%20%7C%203.13-blue.svg)](https://www.python.org/)
 [![HF Model](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Model-yellow)](https://huggingface.co/kiselyovd/brain-mri-segmentation)
 
 Binary brain-tumor segmentation on MRI slices — fine-tuned **SegFormer-B2** as the main model and a hand-rolled **U-Net** as a reproducible baseline, both trained on the Mateusz Buda LGG (TCGA) dataset with a strict patient-level split to prevent data leakage.
+
+> **Part of the [kiselyovd ML portfolio](https://github.com/kiselyovd#ml-portfolio)** — production-grade ML projects sharing one [cookiecutter template](https://github.com/kiselyovd/ml-project-template).
 
 **Russian:** [README.ru.md](README.ru.md) · **Docs:** [kiselyovd.github.io/brain-mri-segmentation](https://kiselyovd.github.io/brain-mri-segmentation/) · **Model:** [kiselyovd/brain-mri-segmentation](https://huggingface.co/kiselyovd/brain-mri-segmentation)
 
@@ -124,6 +127,22 @@ tests/              # pytest suite
 ## Intended Use
 
 Research and educational only. **Not a medical device.** Predictions must not be used for clinical decisions.
+
+See [LIMITATIONS.md](docs/LIMITATIONS.md) for known failure modes and dataset-bias analysis.
+
+## Citation
+
+If this repo helps your work, please cite:
+
+```bibtex
+@software{kiselyov2026brainmri,
+  author  = {Kiselyov, Daniil},
+  title   = {brain-mri-segmentation: SegFormer-B2 brain tumor MRI segmentation},
+  year    = {2026},
+  url     = {https://github.com/kiselyovd/brain-mri-segmentation},
+  version = {v0.1.0}
+}
+```
 
 ## License
 
