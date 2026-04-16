@@ -2,7 +2,7 @@
 name = "brain_mri_segmentation"
 version = "0.1.0"
 description = "Production-grade binary brain-tumor MRI segmentation (LGG / TCGA)."
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 authors = [
   { name = "Daniil Kiselyov", email = "your-email@example.com" },
 ]
