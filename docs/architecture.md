@@ -2,26 +2,24 @@
 
 ## Data flow
 
-```
-TCGA raw dirs (per-patient DICOM/PNG + mask TIF)
-        │
-        ▼   scripts/sync_data.sh
-data/raw/{patient_id}/{slice}.tif + {slice}_mask.tif
-        │
-        ▼   data/prepare.py  (patient-level 80/10/10 split)
-data/processed/
-  ├── train/{images,masks}/
-  ├── val/{images,masks}/
-  └── test/{images,masks}/
-        │
-        ▼   SegmentationDataset + SegmentationDataModule
-  SegmentationModule (Lightning)
-        │
-        ├──► mlruns/  (MLflow — loss, Dice, IoU, pixel acc per epoch)
-        ├──► artifacts/checkpoints/best.ckpt
-        │
-        ▼   scripts/publish_to_hf.py
-  Hugging Face Hub (kiselyovd/brain-mri-segmentation)
+```mermaid
+flowchart TD
+    A["Kaggle LGG MRI Segmentation<br/>(Buda et al., TCGA)"]:::external
+    A -->|sync_data.sh| B["data/raw/<br/>110 TCGA patient subdirs<br/>(paired .tif + _mask.tif)"]:::data
+    B -->|prepare.py<br/>patient-level 88/11/11| C["data/processed/<br/>{train,val,test}/{images,masks}"]:::data
+    C -->|SegmentationDataModule| D["Paired TIF loader<br/>(Lightning + Hydra)"]:::code
+    D --> E["SegFormer-B2 (main)<br/>or U-Net-small (baseline)"]:::model
+    E -->|MLflow tracking<br/>Dice + IoU + Pixel acc| F["artifacts/checkpoints/best.ckpt"]:::artifact
+    F -->|evaluate.py| R["reports/metrics.json"]:::artifact
+    F -->|publish_to_hf.py| G["HuggingFace Hub<br/>kiselyovd/brain-mri-segmentation"]:::external
+    F -->|FastAPI| H["POST /segment<br/>PNG mask response"]:::serve
+
+    classDef external fill:#FFE4B5,stroke:#FF8C00,color:#000
+    classDef data fill:#E6F3FF,stroke:#4A90E2,color:#000
+    classDef code fill:#F0F0F0,stroke:#666,color:#000
+    classDef model fill:#E8F5E9,stroke:#4CAF50,color:#000
+    classDef artifact fill:#FFF9C4,stroke:#F9A825,color:#000
+    classDef serve fill:#F3E5F5,stroke:#9C27B0,color:#000
 ```
 
 ## Model choices

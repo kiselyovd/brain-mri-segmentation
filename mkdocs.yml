@@ -5,9 +5,17 @@ theme:
   name: material
   palette:
     - scheme: default
-      primary: indigo
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
     - scheme: slate
-      primary: indigo
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   features:
     - content.code.copy
     - navigation.indexes
@@ -28,4 +36,7 @@ nav:
   - Architecture: architecture.md
   - Training: training.md
   - Serving: serving.md
+  - Benchmarks: BENCHMARKS.md
+  - Reproducibility: REPRODUCIBILITY.md
+  - Limitations: LIMITATIONS.md
   - API reference: api.md
