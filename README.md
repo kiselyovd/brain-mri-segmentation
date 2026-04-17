@@ -1,11 +1,11 @@
 # brain-mri-segmentation
 
-[![CI](https://github.com/kiselyovd/brain-mri-segmentation/actions/workflows/ci.yml/badge.svg)](https://github.com/kiselyovd/brain-mri-segmentation/actions/workflows/ci.yml)
-[![Docs](https://github.com/kiselyovd/brain-mri-segmentation/actions/workflows/docs.yml/badge.svg)](https://kiselyovd.github.io/brain-mri-segmentation/)
-[![codecov](https://codecov.io/gh/kiselyovd/brain-mri-segmentation/branch/main/graph/badge.svg)](https://codecov.io/gh/kiselyovd/brain-mri-segmentation)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Python 3.12+](https://img.shields.io/badge/python-3.12%20%7C%203.13-blue.svg)](https://www.python.org/)
-[![HF Model](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Model-yellow)](https://huggingface.co/kiselyovd/brain-mri-segmentation)
+[![CI](https://img.shields.io/github/actions/workflow/status/kiselyovd/brain-mri-segmentation/ci.yml?branch=main&label=CI&style=for-the-badge&logo=github)](https://github.com/kiselyovd/brain-mri-segmentation/actions/workflows/ci.yml)
+[![Docs](https://img.shields.io/badge/docs-mkdocs-526CFE?style=for-the-badge&logo=materialformkdocs&logoColor=white)](https://kiselyovd.github.io/brain-mri-segmentation/)
+[![codecov](https://img.shields.io/codecov/c/github/kiselyovd/brain-mri-segmentation?style=for-the-badge&logo=codecov&logoColor=white)](https://codecov.io/gh/kiselyovd/brain-mri-segmentation)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12%20%7C%203.13-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![HF Model](https://img.shields.io/badge/🤗%20HF%20Hub-model-FFD21E?style=for-the-badge)](https://huggingface.co/kiselyovd/brain-mri-segmentation)
 
 Binary brain-tumor segmentation on MRI slices — fine-tuned **SegFormer-B2** as the main model and a hand-rolled **U-Net** as a reproducible baseline, both trained on the Mateusz Buda LGG (TCGA) dataset with a strict patient-level split to prevent data leakage.
 
