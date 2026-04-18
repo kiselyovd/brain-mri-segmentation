@@ -8,28 +8,39 @@ Auto-generated reference for the `brain_mri_segmentation` package via [mkdocstri
 
 ## Data
 
-::: brain_mri_segmentation.data
+::: brain_mri_segmentation.data.datamodule
+::: brain_mri_segmentation.data.dataset
+::: brain_mri_segmentation.data.prepare
 
 ## Models
 
-::: brain_mri_segmentation.models
+::: brain_mri_segmentation.models.factory
+::: brain_mri_segmentation.models.lightning_module
+::: brain_mri_segmentation.models.metrics
+::: brain_mri_segmentation.models.unet
 
 ## Training
 
-::: brain_mri_segmentation.training
+::: brain_mri_segmentation.training.train
 
 ## Evaluation
 
-::: brain_mri_segmentation.evaluation
+::: brain_mri_segmentation.evaluation.evaluate
 
 ## Inference
 
-::: brain_mri_segmentation.inference
+::: brain_mri_segmentation.inference.predict
 
 ## Serving
 
-::: brain_mri_segmentation.serving
+::: brain_mri_segmentation.serving.dependencies
+::: brain_mri_segmentation.serving.errors
+::: brain_mri_segmentation.serving.main
+::: brain_mri_segmentation.serving.routes
+::: brain_mri_segmentation.serving.schemas
 
 ## Utilities
 
-::: brain_mri_segmentation.utils
+::: brain_mri_segmentation.utils.hf_hub
+::: brain_mri_segmentation.utils.logging
+::: brain_mri_segmentation.utils.seed
