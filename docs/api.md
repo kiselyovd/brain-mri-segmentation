@@ -16,7 +16,6 @@ Auto-generated reference for the `brain_mri_segmentation` package via [mkdocstri
 
 ::: brain_mri_segmentation.models.factory
 ::: brain_mri_segmentation.models.lightning_module
-::: brain_mri_segmentation.models.metrics
 ::: brain_mri_segmentation.models.unet
 
 ## Training
