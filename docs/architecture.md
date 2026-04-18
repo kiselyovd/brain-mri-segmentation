@@ -14,12 +14,12 @@ flowchart TD
     F -->|publish_to_hf.py| G["HuggingFace Hub<br/>kiselyovd/brain-mri-segmentation"]:::external
     F -->|FastAPI| H["POST /segment<br/>PNG mask response"]:::serve
 
-    classDef external fill:#FFE4B5,stroke:#FF8C00,color:#000
-    classDef data fill:#E6F3FF,stroke:#4A90E2,color:#000
-    classDef code fill:#F0F0F0,stroke:#666,color:#000
-    classDef model fill:#E8F5E9,stroke:#4CAF50,color:#000
-    classDef artifact fill:#FFF9C4,stroke:#F9A825,color:#000
-    classDef serve fill:#F3E5F5,stroke:#9C27B0,color:#000
+    classDef external fill:#EDE7F6,stroke:#673AB7,color:#311B92
+    classDef data fill:#D1C4E9,stroke:#512DA8,color:#311B92
+    classDef code fill:#B39DDB,stroke:#4527A0,color:#311B92
+    classDef model fill:#9575CD,stroke:#311B92,color:#fff
+    classDef artifact fill:#7E57C2,stroke:#311B92,color:#fff
+    classDef serve fill:#673AB7,stroke:#311B92,color:#fff
 ```
 
 ## Model choices
