@@ -7,6 +7,8 @@
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%20%7C%203.13-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![HF Model](https://img.shields.io/badge/🤗%20HF%20Hub-model-FFD21E?style=for-the-badge)](https://huggingface.co/kiselyovd/brain-mri-segmentation)
 
+<p align="center"><img src="docs/images/banner.jpg" width="100%" alt="brain-mri-segmentation - SegFormer-B2 brain tumor MRI segmentation"></p>
+
 Binary brain-tumor segmentation on MRI slices — fine-tuned **SegFormer-B2** as the main model and a hand-rolled **U-Net** as a reproducible baseline, both trained on the Mateusz Buda LGG (TCGA) dataset with a strict patient-level split to prevent data leakage.
 
 ![brain-mri-segmentation hero](docs/images/hero.png)
@@ -23,14 +25,24 @@ Resulting slice counts: **3,133 train / 409 val / 387 test**.
 
 ## Results
 
-Test-set metrics after full training (fill in with real numbers from `reports/metrics.json`):
+Test-set metrics after full training (real numbers from `reports/metrics.json`):
 
 | Model | Dice | IoU | Pixel Accuracy |
 |---|---|---|---|
-| **SegFormer-B2** (main) | **65.5%** | **66.2%** | **99.73%** |
+| **SegFormer-B2** (main) | **65.5%** | **66.2%** | **99.7%** |
 | U-Net 4-level baseline | 51.9% | 57.7% | 99.66% |
 
 Full per-slice report lives in `reports/metrics.json` after running evaluation.
+
+## Visualizations
+
+Qualitative results on held-out test slices - input FLAIR, ground-truth mask, and SegFormer-B2 prediction side by side:
+
+<p align="center"><img src="docs/images/segmentation_examples.png" width="100%" alt="Qualitative segmentation panel - input MRI, ground truth, and SegFormer-B2 prediction"></p>
+
+Test-set metric comparison between the SegFormer-B2 main model and the U-Net baseline (Dice, IoU, pixel accuracy):
+
+<p align="center"><img src="docs/images/metrics_bar.png" width="80%" alt="Bar chart comparing SegFormer-B2 and U-Net baseline on Dice, IoU, and pixel accuracy"></p>
 
 ## Quick Start
 

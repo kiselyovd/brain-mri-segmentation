@@ -1,6 +1,6 @@
 # brain-mri-segmentation
 
-![brain-mri-segmentation · SegFormer-B2 tumor mask overlay](images/hero.png)
+<p align="center"><img src="images/banner.jpg" width="100%" alt="brain-mri-segmentation - SegFormer-B2 brain tumor MRI segmentation"></p>
 
 Production-grade binary semantic segmentation of brain tumors from MRI scans — pixel-level mask prediction for low-grade glioma (LGG) regions.
 
@@ -16,6 +16,16 @@ Production-grade binary semantic segmentation of brain tumors from MRI scans —
 | **Baseline** | Small U-Net (4 levels, 32→256 ch, ~1.9 M params, hand-rolled) |
 | **Stack** | PyTorch Lightning · Hydra · MLflow · DVC · FastAPI · Docker · GitHub Actions · MkDocs |
 | **License** | MIT |
+
+## Visualizations
+
+Qualitative results on held-out test slices - input FLAIR, ground-truth mask, and SegFormer-B2 prediction side by side:
+
+<p align="center"><img src="images/segmentation_examples.png" width="100%" alt="Qualitative segmentation panel - input MRI, ground truth, and SegFormer-B2 prediction"></p>
+
+Test-set metric comparison between the SegFormer-B2 main model and the U-Net baseline (Dice, IoU, pixel accuracy):
+
+<p align="center"><img src="images/metrics_bar.png" width="80%" alt="Bar chart comparing SegFormer-B2 and U-Net baseline on Dice, IoU, and pixel accuracy"></p>
 
 ## Sections
 
