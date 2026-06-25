@@ -1,4 +1,4 @@
-"""Serving smoke — FastAPI TestClient hits /health."""
+"""Serving smoke - FastAPI TestClient hits /health."""
 
 from __future__ import annotations
 

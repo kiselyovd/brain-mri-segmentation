@@ -33,13 +33,13 @@ See [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) for the full data/train
 
 Use short, kebab-case branch names prefixed by the change kind:
 
-- `feat/<short-topic>` — new feature (e.g. `feat/dice-loss-focal-variant`)
-- `fix/<short-topic>` — bug fix (e.g. `fix/segformer-resize-off-by-one`)
-- `docs/<short-topic>` — documentation-only change
-- `ci/<short-topic>` — CI, workflows, pre-commit, quality gates
-- `chore/<short-topic>` — repo hygiene, dependency bumps, refactors
+- `feat/<short-topic>` - new feature (e.g. `feat/dice-loss-focal-variant`)
+- `fix/<short-topic>` - bug fix (e.g. `fix/segformer-resize-off-by-one`)
+- `docs/<short-topic>` - documentation-only change
+- `ci/<short-topic>` - CI, workflows, pre-commit, quality gates
+- `chore/<short-topic>` - repo hygiene, dependency bumps, refactors
 
-## Commit messages — Conventional Commits
+## Commit messages - Conventional Commits
 
 All commits MUST follow [Conventional Commits](https://www.conventionalcommits.org/). Types used in this repo:
 
@@ -53,7 +53,7 @@ All commits MUST follow [Conventional Commits](https://www.conventionalcommits.o
 | `test` | Tests only |
 | `ci` | CI / workflows / pre-commit |
 | `build` | Build system, packaging, Docker |
-| `style` | Formatting (ruff, whitespace) — no logic change |
+| `style` | Formatting (ruff, whitespace) - no logic change |
 | `chore` | Everything else (deps, gitignore, metadata) |
 
 Example:
@@ -67,13 +67,13 @@ feat(training): add SegFormer-B2 mixed-precision training path
 
 ## No AI co-author trailers
 
-Do **not** add `Co-Authored-By: Claude …`, `Co-Authored-By: GitHub Copilot …`, or any other AI-tool trailer to commits. This applies to both human contributors and any AI assistants they use. A commit should have exactly one author — the human pushing the change.
+Do **not** add `Co-Authored-By: Claude …`, `Co-Authored-By: GitHub Copilot …`, or any other AI-tool trailer to commits. This applies to both human contributors and any AI assistants they use. A commit should have exactly one author - the human pushing the change.
 
 If an AI assistant helped you write the patch, that is completely fine. Just omit the trailer.
 
 ## Pull requests
 
-- Keep PRs focused — one logical change per PR.
+- Keep PRs focused - one logical change per PR.
 - The CI must be green (lint, type, test, Docker build, actionlint) before merge.
 - Update `CHANGELOG.md` under `[Unreleased]` for any user-visible change.
 - For breaking changes, call it out in the PR description and the changelog entry.
@@ -83,7 +83,7 @@ If an AI assistant helped you write the patch, that is completely fine. Just omi
 - `ruff` and `ruff format` are the source of truth for formatting and lint.
 - Type hints on all public functions; `mypy` runs in CI.
 - Docstrings on public modules / classes / functions (`interrogate` enforces ≥35% coverage).
-- Keep imports first-party-qualified (`from brain_mri_segmentation.training import …`) — relative imports beyond the immediate parent are discouraged.
+- Keep imports first-party-qualified (`from brain_mri_segmentation.training import …`) - relative imports beyond the immediate parent are discouraged.
 
 ## Reporting issues
 

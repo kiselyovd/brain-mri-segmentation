@@ -1,4 +1,4 @@
-"""Model factory — returns a segmentation model by name."""
+"""Model factory - returns a segmentation model by name."""
 
 from __future__ import annotations
 

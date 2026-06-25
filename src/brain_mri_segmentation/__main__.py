@@ -6,7 +6,7 @@ import sys
 
 
 def main() -> int:
-    print("brain-mri-segmentation — use make train / make evaluate / make serve")
+    print("brain-mri-segmentation - use make train / make evaluate / make serve")
     return 0
 
 

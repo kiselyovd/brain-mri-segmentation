@@ -6,18 +6,18 @@ This project is designed to produce identical results across re-runs on the same
 
 - `seed: 42` in `configs/config.yaml` is threaded through `seed_everything()` at the start of `src/brain_mri_segmentation/training/train.py`.
 - Lightning's `deterministic="warn"` mode avoids the `nll_loss2d_forward_out_cuda_template` crash while still catching non-deterministic kernels elsewhere.
-- **Patient-level split is deterministic**: `prepare.py` shuffles TCGA patient dirs with `random.Random(seed=42)` before the 88/11/11 partition — re-running always produces the same split.
+- **Patient-level split is deterministic**: `prepare.py` shuffles TCGA patient dirs with `random.Random(seed=42)` before the 88/11/11 partition - re-running always produces the same split.
 
 ## Dependencies
 
 - **`pyproject.toml`** declares direct deps; **`uv.lock`** is committed and pins every transitive package version + hash.
-- **`.python-version`** = `3.13` — CI + local dev must match.
+- **`.python-version`** = `3.13` - CI + local dev must match.
 - CUDA torch pinned via `[[tool.uv.index]] pytorch-cu124` on Win/Linux.
 - CI runs the suite against Python 3.12 + 3.13 via a matrix strategy.
 
 ## Data
 
-- **`data/sample/`** (8 paired image+mask TIFs) is in git — CI + smoke tests work without any external download.
+- **`data/sample/`** (8 paired image+mask TIFs) is in git - CI + smoke tests work without any external download.
 - **`data/raw/`** and **`data/processed/`** are DVC-tracked. DVC remote is local-only by default.
 - Kaggle source: `kaggle_3m/` (Buda et al., TCGA-LGG). 110 patient subdirs with paired `*.tif` + `*_mask.tif`.
 

@@ -7,13 +7,13 @@
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%20%7C%203.13-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![HF Model](https://img.shields.io/badge/🤗%20HF%20Hub-model-FFD21E?style=for-the-badge)](https://huggingface.co/kiselyovd/brain-mri-segmentation)
 
-Бинарная сегментация опухолей головного мозга на МРТ-срезах — дообученный **SegFormer-B2** в роли основной модели и самописный **U-Net** как воспроизводимый baseline, обученные на датасете LGG (TCGA) Матеуша Буды с разбиением по пациентам, исключающим утечку данных.
+Бинарная сегментация опухолей головного мозга на МРТ-срезах - дообученный **SegFormer-B2** в роли основной модели и самописный **U-Net** как воспроизводимый baseline, обученные на датасете LGG (TCGA) Матеуша Буды с разбиением по пациентам, исключающим утечку данных.
 
 **English:** [README.md](README.md) · **Docs:** [kiselyovd.github.io/brain-mri-segmentation](https://kiselyovd.github.io/brain-mri-segmentation/) · **Модель:** [kiselyovd/brain-mri-segmentation](https://huggingface.co/kiselyovd/brain-mri-segmentation)
 
 ## Датасет
 
-[LGG MRI Segmentation](https://www.kaggle.com/datasets/mateuszbuda/lgg-mri-segmentation) от Матеуша Буды на Kaggle — 110 пациентов, 3 929 парных FLAIR-срезов с бинарными масками опухолей из The Cancer Genome Atlas (TCGA). `src/brain_mri_segmentation/data/prepare.py` выполняет **разбиение 80/10/10 на уровне пациентов** (88/11/11 пациентов), так что один и тот же пациент не попадает в несколько партиций.
+[LGG MRI Segmentation](https://www.kaggle.com/datasets/mateuszbuda/lgg-mri-segmentation) от Матеуша Буды на Kaggle - 110 пациентов, 3 929 парных FLAIR-срезов с бинарными масками опухолей из The Cancer Genome Atlas (TCGA). `src/brain_mri_segmentation/data/prepare.py` выполняет **разбиение 80/10/10 на уровне пациентов** (88/11/11 пациентов), так что один и тот же пациент не попадает в несколько партиций.
 
 Итоговое количество срезов: **3 133 train / 409 val / 387 test**.
 
@@ -54,13 +54,13 @@ docker compose up api
 
 ## Полные команды обучения
 
-**Основная — SegFormer-B2:**
+**Основная - SegFormer-B2:**
 
 ```bash
 uv run python -m brain_mri_segmentation.training.train experiment=sota
 ```
 
-**Baseline — U-Net (4 уровня, 32→256 каналов):**
+**Baseline - U-Net (4 уровня, 32→256 каналов):**
 
 ```bash
 uv run python -m brain_mri_segmentation.training.train \
@@ -84,7 +84,7 @@ result = predict(model, "slice.tif")
 print(f"Mask: {len(result['mask'])}×{len(result['mask'][0])}")
 ```
 
-`result["mask"]` — двумерный бинарный массив (H × W), совмещённый с входным срезом.
+`result["mask"]` - двумерный бинарный массив (H × W), совмещённый с входным срезом.
 
 ## Сервинг
 
@@ -126,7 +126,7 @@ tests/              # pytest
 
 Исследовательский и образовательный проект. **Не является медицинским изделием.** Предсказания модели запрещается использовать для принятия клинических решений.
 
-Известные ограничения и режимы отказа — в [docs/LIMITATIONS.md](docs/LIMITATIONS.md).
+Известные ограничения и режимы отказа - в [docs/LIMITATIONS.md](docs/LIMITATIONS.md).
 
 ## Цитирование
 
@@ -142,4 +142,4 @@ tests/              # pytest
 
 ## Лицензия
 
-MIT — см. [LICENSE](LICENSE).
+MIT - см. [LICENSE](LICENSE).

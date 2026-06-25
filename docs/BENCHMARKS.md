@@ -21,11 +21,11 @@ Reported numbers on the same LGG / TCGA kaggle_3m split vary by paper; here are 
 | **SegFormer-B2** (ours) | **65.5%** | This repo, v0.1.0, early-stopped at epoch 13/99 |
 | U-Net-tiny (ours, baseline) | 51.9% | This repo, 1.9M-param reference |
 
-Our SegFormer-B2 run was early-stopped (validation Dice plateaued) after just 13 epochs — it's a demonstration of the pipeline, not a tuned SOTA. More training epochs + data augmentation + auxiliary deep-supervision losses would close the gap to Buda's original ~82%.
+Our SegFormer-B2 run was early-stopped (validation Dice plateaued) after just 13 epochs - it's a demonstration of the pipeline, not a tuned SOTA. More training epochs + data augmentation + auxiliary deep-supervision losses would close the gap to Buda's original ~82%.
 
 ## Trade-offs
 
-- **SegFormer vs U-Net**: SegFormer wins on Dice by ~14pp thanks to global self-attention — but costs 14x more parameters and 4x more inference latency. For edge deployment the tiny U-Net is a reasonable choice despite the weaker Dice.
+- **SegFormer vs U-Net**: SegFormer wins on Dice by ~14pp thanks to global self-attention - but costs 14x more parameters and 4x more inference latency. For edge deployment the tiny U-Net is a reasonable choice despite the weaker Dice.
 - **Why not bigger SegFormer variants**: SegFormer-B4/B5 would likely add 3-5pp Dice but don't fit comfortably alongside a training pipeline on 10 GB VRAM at batch 16 × 256² input.
 - **Why 2D, not 3D**: a 3D U-Net would exploit through-plane context and likely add 5-10pp Dice, but requires 10x the memory and doesn't fit the "single-RTX-3080" constraint of this portfolio.
 

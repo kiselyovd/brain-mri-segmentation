@@ -9,17 +9,17 @@
 
 <p align="center"><img src="docs/images/banner.jpg" width="100%" alt="brain-mri-segmentation - SegFormer-B2 brain tumor MRI segmentation"></p>
 
-Binary brain-tumor segmentation on MRI slices — fine-tuned **SegFormer-B2** as the main model and a hand-rolled **U-Net** as a reproducible baseline, both trained on the Mateusz Buda LGG (TCGA) dataset with a strict patient-level split to prevent data leakage.
+Binary brain-tumor segmentation on MRI slices - fine-tuned **SegFormer-B2** as the main model and a hand-rolled **U-Net** as a reproducible baseline, both trained on the Mateusz Buda LGG (TCGA) dataset with a strict patient-level split to prevent data leakage.
 
 ![brain-mri-segmentation hero](docs/images/hero.png)
 
-> **Part of the [kiselyovd ML portfolio](https://github.com/kiselyovd#ml-portfolio)** — production-grade ML projects sharing one [cookiecutter template](https://github.com/kiselyovd/ml-project-template).
+> **Part of the [kiselyovd ML portfolio](https://github.com/kiselyovd#ml-portfolio)** - production-grade ML projects sharing one [cookiecutter template](https://github.com/kiselyovd/ml-project-template).
 
 **Russian:** [README.ru.md](README.ru.md) · **Docs:** [kiselyovd.github.io/brain-mri-segmentation](https://kiselyovd.github.io/brain-mri-segmentation/) · **Model:** [kiselyovd/brain-mri-segmentation](https://huggingface.co/kiselyovd/brain-mri-segmentation)
 
 ## Dataset
 
-Mateusz Buda's [LGG MRI Segmentation](https://www.kaggle.com/datasets/mateuszbuda/lgg-mri-segmentation) on Kaggle — 110 patients, 3,929 paired FLAIR slices with binary tumor masks from The Cancer Genome Atlas (TCGA). `src/brain_mri_segmentation/data/prepare.py` performs a **patient-level 80/10/10 split** (88/11/11 patients), so no patient appears in more than one partition.
+Mateusz Buda's [LGG MRI Segmentation](https://www.kaggle.com/datasets/mateuszbuda/lgg-mri-segmentation) on Kaggle - 110 patients, 3,929 paired FLAIR slices with binary tumor masks from The Cancer Genome Atlas (TCGA). `src/brain_mri_segmentation/data/prepare.py` performs a **patient-level 80/10/10 split** (88/11/11 patients), so no patient appears in more than one partition.
 
 Resulting slice counts: **3,133 train / 409 val / 387 test**.
 
@@ -70,13 +70,13 @@ docker compose up api
 
 ## Full Training Commands
 
-**Main — SegFormer-B2:**
+**Main - SegFormer-B2:**
 
 ```bash
 uv run python -m brain_mri_segmentation.training.train experiment=sota
 ```
 
-**Baseline — U-Net (4 levels, 32→256 ch):**
+**Baseline - U-Net (4 levels, 32→256 ch):**
 
 ```bash
 uv run python -m brain_mri_segmentation.training.train \
@@ -160,4 +160,4 @@ If this repo helps your work, please cite:
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT - see [LICENSE](LICENSE).

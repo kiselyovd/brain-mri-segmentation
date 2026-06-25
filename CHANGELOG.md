@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Test-set metrics: SegFormer-B2 Dice=65.5% / IoU=66.2% / px-acc=99.73%; U-Net baseline Dice=51.9% / IoU=57.7% / px-acc=99.66%.
 - FastAPI serving app (`POST /segment`, `GET /health`, `GET /metrics`) with request-ID propagation.
 - Multi-stage Docker images (`training` + `serving`) and `docker compose` wiring.
-- Hugging Face Hub publishing via `scripts/publish_to_hf.py` — native `safetensors` export, rich frontmatter, and widget PNG samples.
+- Hugging Face Hub publishing via `scripts/publish_to_hf.py` - native `safetensors` export, rich frontmatter, and widget PNG samples.
 - DVC pipeline (`dvc.yaml`) for `prepare → train → evaluate` reproducibility.
 - MkDocs Material documentation site with bilingual (EN/RU) README and model card.
 - Quality gates: ruff, mypy, deptry, bandit, interrogate, codespell, actionlint, pre-commit.
