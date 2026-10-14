@@ -19,6 +19,7 @@ metrics:
     example_title: {{ ex.example_title }}
 {% endfor %}{% endif %}
 
+{% if metrics_verified | default(false) %}
 model-index:
   - name: {{ repo_id }}
     results:
@@ -31,38 +32,51 @@ model-index:
 {% for m in task_result.metrics %}          - type: {{ m.type }}
             value: {{ m.value }}
 {% endfor %}{% endfor %}
+{% endif %}
 ---
 
 # brain-mri-segmentation
 
 {{ model_description }}
 
-## Metrics
+## Historical reported aggregates
+
+**Metric-definition audit pending.** Values are retained from stored records and are not verified performance claims. No numeric model-index results are exported until an explicit verified-metrics context is supplied.
 
 {{ metrics_table }}
 
 ## Usage
 
+The current pinned native artifact is loaded below with the repository preprocessing (256×256, [0,1], no ImageNet normalization). The exported processor has a different configuration and is bypassed; this example does not verify the legacy metrics. When publishing a new model revision, update the pinned SHA with its actual provenance.
+
 
 ```python
-from transformers import AutoImageProcessor, AutoModelForSemanticSegmentation
+import numpy as np
 import torch
 from PIL import Image
+from torchvision.transforms import v2
+from transformers import AutoModelForSemanticSegmentation
 
-processor = AutoImageProcessor.from_pretrained("{{ repo_id }}")
-model = AutoModelForSemanticSegmentation.from_pretrained("{{ repo_id }}")
-
-image = Image.open("your_image.png")
-inputs = processor(images=image, return_tensors="pt")
-with torch.no_grad():
-    outputs = model(**inputs)
-logits = outputs.logits  # shape (batch_size, num_labels, height, width)
+model = AutoModelForSemanticSegmentation.from_pretrained(
+    "{{ repo_id }}",
+    revision="0ea834ffd86dbca24666b34fa358387ec86f4bdf",
+    use_safetensors=True, trust_remote_code=False,
+).eval()
+image = Image.open("slice.tif").convert("RGB")
+pixels = torch.from_numpy(np.asarray(image, dtype=np.float32) / 255.0).permute(2, 0, 1)
+pixels = v2.Resize((256, 256), antialias=True)(pixels).unsqueeze(0)
+with torch.inference_mode():
+    logits = model(pixel_values=pixels).logits
+    logits = torch.nn.functional.interpolate(
+        logits, size=(256, 256), mode="bilinear", align_corners=False
+    )
+    mask = logits.argmax(dim=1)[0]  # 256 x 256; 0 background, 1 tumor
 ```
 
 
 ## Training Data
 
-{% if hf_dataset %}Trained on [{{ dataset_name or hf_dataset }}](https://huggingface.co/datasets/{{ hf_dataset }}).
+{% if hf_dataset %}Source: [LGG MRI dataset](https://www.kaggle.com/datasets/mateuszbuda/lgg-mri-segmentation).
 {% else %}Training dataset details not specified.
 {% endif %}
 

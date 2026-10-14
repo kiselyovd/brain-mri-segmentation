@@ -19,14 +19,16 @@
 
 ## Результаты
 
-Метрики на тестовом сплите после полного обучения (проставить из `reports/metrics.json`):
+**Исторические агрегированные метрики — определения требуют аудита.** Значения сохранены для прослеживаемости и не считаются подтверждённой оценкой качества. Перед сравнением нужно согласовать определения Dice/IoU, checkpoint/config и состав оценки по пациентам.
+
+Исторические значения из сохранённых агрегированных отчётов:
 
 | Модель | Dice | IoU | Pixel Accuracy |
 |---|---|---|---|
 | **SegFormer-B2** (основная) | **65.5%** | **66.2%** | **99.73%** |
 | U-Net 4-уровневый baseline | 51.9% | 57.7% | 99.66% |
 
-Полный отчёт по срезам лежит в `reports/metrics.json` после запуска evaluation.
+`reports/metrics.json` содержит агрегаты, а не результаты по отдельным срезам или пациентам.
 
 ## Быстрый старт
 
@@ -73,18 +75,32 @@ uv run python -m brain_mri_segmentation.training.train \
 
 ## Инференс
 
+На HF опубликована native-модель SegFormer для Transformers, а не Lightning `best.ckpt`. Пример повторяет обработку входа в коде проекта: RGB, [0, 1], tensor resize 256×256 без ImageNet-нормализации. Опубликованный processor задаёт 512×512 с нормализацией и здесь намеренно не используется. Маска соответствует resized-входу, а не исходному размеру среза. Пример не подтверждает исторические метрики.
+
 ```python
-from huggingface_hub import snapshot_download
+import numpy as np
+import torch
+from PIL import Image
+from torchvision.transforms import v2
+from transformers import AutoModelForSemanticSegmentation
 
-from brain_mri_segmentation.inference.predict import load_model, predict
-
-weights_dir = snapshot_download("kiselyovd/brain-mri-segmentation")
-model = load_model(f"{weights_dir}/best.ckpt")
-result = predict(model, "slice.tif")
-print(f"Mask: {len(result['mask'])}×{len(result['mask'][0])}")
+model = AutoModelForSemanticSegmentation.from_pretrained(
+    "kiselyovd/brain-mri-segmentation",
+    revision="0ea834ffd86dbca24666b34fa358387ec86f4bdf",
+    use_safetensors=True, trust_remote_code=False,
+).eval()
+image = Image.open("slice.tif").convert("RGB")
+pixels = torch.from_numpy(np.asarray(image, dtype=np.float32) / 255.0).permute(2, 0, 1)
+pixels = v2.Resize((256, 256), antialias=True)(pixels).unsqueeze(0)
+with torch.inference_mode():
+    logits = model(pixel_values=pixels).logits
+    logits = torch.nn.functional.interpolate(
+        logits, size=(256, 256), mode="bilinear", align_corners=False
+    )
+    mask = logits.argmax(dim=1)[0]  # 256 x 256; 0 background, 1 tumor
 ```
 
-`result["mask"]` - двумерный бинарный массив (H × W), совмещённый с входным срезом.
+Локальный `artifacts/checkpoints/best.ckpt` создаётся при обучении и используется собственным Lightning inference/serving. Он не является файлом текущего HF snapshot.
 
 ## Сервинг
 

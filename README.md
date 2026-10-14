@@ -25,22 +25,24 @@ Resulting slice counts: **3,133 train / 409 val / 387 test**.
 
 ## Results
 
-Test-set metrics after full training (real numbers from `reports/metrics.json`):
+**Legacy reported aggregates — metric-definition audit pending.** Stored values are retained for traceability, not as verified performance claims. The Dice/IoU definitions, checkpoint/config lineage and per-patient evaluation manifest need reconciliation before comparisons.
+
+Historical values from the committed aggregate reports:
 
 | Model | Dice | IoU | Pixel Accuracy |
 |---|---|---|---|
 | **SegFormer-B2** (main) | **65.5%** | **66.2%** | **99.7%** |
 | U-Net 4-level baseline | 51.9% | 57.7% | 99.66% |
 
-Full per-slice report lives in `reports/metrics.json` after running evaluation.
+`reports/metrics.json` contains aggregate values, not per-slice or per-patient results.
 
 ## Visualizations
 
-Qualitative results on held-out test slices - input FLAIR, ground-truth mask, and SegFormer-B2 prediction side by side:
+Selected tumor-bearing sample slices: input, dataset mask, and model prediction. The panel's source split is not recorded; these illustrations do not establish held-out performance:
 
 <p align="center"><img src="docs/images/segmentation_examples.png" width="100%" alt="Qualitative segmentation panel - input MRI, ground truth, and SegFormer-B2 prediction"></p>
 
-Test-set metric comparison between the SegFormer-B2 main model and the U-Net baseline (Dice, IoU, pixel accuracy):
+Plot of the same legacy reported aggregates (metric-definition audit pending):
 
 <p align="center"><img src="docs/images/metrics_bar.png" width="80%" alt="Bar chart comparing SegFormer-B2 and U-Net baseline on Dice, IoU, and pixel accuracy"></p>
 
@@ -89,18 +91,32 @@ Every run is tracked with MLflow under `./mlruns/`; launch `mlflow ui --backend-
 
 ## Inference
 
+The Hub artifact is a Transformers-native SegFormer, not a Lightning `best.ckpt`. This example follows the repository preprocessing: RGB, [0, 1], tensor resize to 256×256 without ImageNet normalization. The published processor instead specifies 512×512 with normalization and is intentionally bypassed here. The returned mask corresponds to the resized input, not the original slice dimensions. This example does not validate the legacy metrics.
+
 ```python
-from huggingface_hub import snapshot_download
+import numpy as np
+import torch
+from PIL import Image
+from torchvision.transforms import v2
+from transformers import AutoModelForSemanticSegmentation
 
-from brain_mri_segmentation.inference.predict import load_model, predict
-
-weights_dir = snapshot_download("kiselyovd/brain-mri-segmentation")
-model = load_model(f"{weights_dir}/best.ckpt")
-result = predict(model, "slice.tif")
-print(f"Mask: {len(result['mask'])}×{len(result['mask'][0])}")
+model = AutoModelForSemanticSegmentation.from_pretrained(
+    "kiselyovd/brain-mri-segmentation",
+    revision="0ea834ffd86dbca24666b34fa358387ec86f4bdf",
+    use_safetensors=True, trust_remote_code=False,
+).eval()
+image = Image.open("slice.tif").convert("RGB")
+pixels = torch.from_numpy(np.asarray(image, dtype=np.float32) / 255.0).permute(2, 0, 1)
+pixels = v2.Resize((256, 256), antialias=True)(pixels).unsqueeze(0)
+with torch.inference_mode():
+    logits = model(pixel_values=pixels).logits
+    logits = torch.nn.functional.interpolate(
+        logits, size=(256, 256), mode="bilinear", align_corners=False
+    )
+    mask = logits.argmax(dim=1)[0]  # 256 x 256; 0 background, 1 tumor
 ```
 
-`result["mask"]` is a 2-D binary array (H × W) aligned to the input slice.
+A local `artifacts/checkpoints/best.ckpt` is produced by training and used by the repository's Lightning inference/serving path. It is not a file in the current Hub snapshot.
 
 ## Serving
 

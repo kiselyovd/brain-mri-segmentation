@@ -3,7 +3,7 @@
 Produces two figures under ``reports/``:
 
 1. ``segmentation_examples.png`` -- the hero qualitative panel. For a handful of
-   test slices that actually contain a tumor, each row shows the MRI slice, the
+   sample slices that actually contain a tumor, each row shows the MRI slice, the
    ground-truth mask overlay, and the model's predicted mask overlay, with the
    per-image Dice score (real prediction vs ground truth) in the title.
 2. ``metrics_bar.png`` -- a grouped bar chart comparing the main SegFormer-B2
@@ -12,7 +12,7 @@ Produces two figures under ``reports/``:
 Inference deliberately mirrors the evaluation pipeline in
 ``brain_mri_segmentation.evaluation.evaluate`` (resize to ``image_size`` with a
 0..1 rescale, no ImageNet normalization, bilinear upsample of the logits, then
-argmax) so the per-image Dice is consistent with ``reports/metrics.json``.
+argmax) for the selected samples; consistency with the legacy aggregate report remains unaudited.
 """
 
 from __future__ import annotations
@@ -187,7 +187,7 @@ def make_metrics_bar(main_path: Path, baseline_path: Path, out_path: Path) -> No
     bars_base = ax.bar(x + width / 2, base_vals, width, label="U-Net (baseline)", color="#9AA7C7")
 
     ax.set_ylabel("Score (%)")
-    ax.set_title("Test-set metrics: SegFormer-B2 vs U-Net baseline", fontweight="bold")
+    ax.set_title("Legacy aggregates: metric audit pending", fontweight="bold")
     ax.set_xticks(x)
     ax.set_xticklabels(labels)
     ax.set_ylim(0, 109)

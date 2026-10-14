@@ -1,34 +1,23 @@
-# Limitations & Failure Modes
+# Limitations and provenance
 
-This page is a deliberate call-out of where the published model falls short. Read it before using the weights for anything beyond demo / research.
+Research and education only; the repository does not provide clinical validation.
 
-## Dataset scope
+**Legacy reported aggregates — metric-definition audit pending.** Stored values are retained for traceability, not as verified performance claims. The Dice/IoU definitions, checkpoint/config lineage and per-patient evaluation manifest need reconciliation before comparisons.
 
-- **Small cohort**: 110 patients (~3929 2D slices) from TCGA-LGG - the Buda et al. (2019) Kaggle release. Low-grade glioma only; high-grade glioma (HGG), metastases, meningiomas, and non-brain pathology are out of distribution.
-- **Scanner bias**: The kaggle_3m set comes from ~4 scanner models in TCGA archives. Field-strength and sequence variations across real-world scanners will shift performance.
-- **2D slice-level model**: The architecture processes each axial slice independently. Volumetric context (through-plane continuity of tumor boundary) is not exploited - a 3D U-Net or volumetric transformer would likely do better.
-- **Small held-out test set**: 387 slices from 11 patients. Reported Dice=65.5% has ~±3pp confidence interval.
+## Known scope
 
-## Segmentation-specific failure modes
+- The source is the Buda LGG/TCGA dataset: a limited low-grade-glioma cohort, not a representative clinical population.
+- The model processes individual 2D slices, without a 3D volumetric or longitudinal context.
+- Preparation code uses a patient-level split. The stored metric files do not record the complete patient/slice manifest or checkpoint lineage of the legacy runs.
+- Input processing matters: repository inference scales RGB to [0, 1] and resizes the tensor to 256×256. The published HF processor has a different configuration; see the native loading example in the README.
+- The API returns a binary mask. No calibrated uncertainty or externally validated operating point is published.
 
-- **Thin tumor edges get under-segmented**: Dice of ~65% reflects edge-voxel misses. The model is confident in the tumor core but less so at the periphery.
-- **Hyperintense non-tumor regions get over-segmented**: flair-hyperintense but non-tumor tissue (edema, gliosis) sometimes gets predicted as tumor.
-- **Cross-midline tumors underperform**: tumors extending across the brain midline miss the far-side extension more often than expected.
-- **Empty-mask slices**: ~40% of slices in the dataset are tumor-free. The model handles these correctly most of the time but occasionally predicts tiny spurious blobs.
+## Qualitative examples
 
-## Not a medical device
+The published panel contains selected tumor-bearing samples. `make_plots.py` prefers `data/sample`; `build_sample_data.py` defaults to a training source. A recorded split/patient manifest for that panel is absent, so it must not be presented as held-out test proof.
 
-- Not FDA-cleared, not CE-marked, not clinically validated.
-- Any clinical use requires independent validation by qualified neuroradiologists.
-- Do not use for treatment planning or patient-facing diagnostics.
+Small lesions, ambiguous boundaries, image/sequence shift and slices without tumor are relevant cases to inspect. The current aggregate report does not quantify those failure categories or a confidence interval. Claims of specific architecture gains, expected future improvements or ±3pp intervals are unsupported by these artifacts.
 
-## Adversarial & reliability
+## Before interpreting quality
 
-- No adversarial or corruption robustness testing.
-- No uncertainty estimation - single mask output, no per-voxel confidence. Monte Carlo dropout or a Bayesian head would help.
-
-## What this project *is* good for
-
-- A production ML pipeline template: Lightning + Hydra + MLflow + DVC + FastAPI + Docker + HF Hub + CI/CD.
-- A reproducible baseline for brain-tumor segmentation research.
-- Comparing SegFormer vs a small U-Net on medical imaging with a modest compute budget.
+Reconcile the metric definitions and export per-patient predictions/masks with their provenance. Do not infer clinical suitability or comparative architecture capacity from the current legacy table.

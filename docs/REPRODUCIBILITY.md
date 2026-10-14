@@ -1,6 +1,8 @@
 # Reproducibility
 
-This project is designed to produce identical results across re-runs on the same hardware. Here's how each moving part is pinned.
+These commands document the current pipeline. The legacy reports lack sufficient lineage for a claim of identical reproduced results.
+
+**Legacy reported aggregates — metric-definition audit pending.** Stored values are retained for traceability, not as verified performance claims. The Dice/IoU definitions, checkpoint/config lineage and per-patient evaluation manifest need reconciliation before comparisons.
 
 ## Random seeds
 
@@ -29,7 +31,7 @@ This project is designed to produce identical results across re-runs on the same
 
 ## Model weights
 
-- Published to HF Hub at `kiselyovd/brain-mri-segmentation`. Each release tag maps to an HF commit SHA.
+- Published to HF Hub at `kiselyovd/brain-mri-segmentation`. Pin the actual HF commit explicitly; do not infer a release-to-checkpoint mapping without a recorded receipt.
 - Weights ship as `model.safetensors`.
 
 ## One-command reproduction
@@ -44,4 +46,4 @@ uv run python -m brain_mri_segmentation.training.train +experiment=sota
 uv run python -m brain_mri_segmentation.evaluation.evaluate --checkpoint artifacts/checkpoints/best.ckpt --out reports/metrics.json
 ```
 
-Expected: the numbers in [BENCHMARKS.md](BENCHMARKS.md) ± 1% (small test-set variance + floating-point noise).
+The commands generate a new evaluation record. Recovery of the legacy numbers or a ±1% tolerance is not established. Archive the checkpoint/config/data hashes and the patient/slice manifest with the new report; see [the audit requirements](BENCHMARKS.md).
