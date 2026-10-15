@@ -30,19 +30,17 @@ def load_model(checkpoint_path: str | Path):
 
 
 def predict(model, input_path: str | Path, image_size: int = 256) -> dict:
-    import numpy as np
     import torch
     from PIL import Image
-    from torchvision.transforms import v2
+
+    from ..data.preprocessing import image_tensor
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
     model = model.train(False)
 
     img = Image.open(input_path).convert("RGB")
-    img_arr = np.asarray(img, dtype=np.float32) / 255.0
-    img_t = torch.from_numpy(img_arr).permute(2, 0, 1)
-    x = v2.Resize((image_size, image_size), antialias=True)(img_t).unsqueeze(0).to(device)
+    x = image_tensor(img, image_size).unsqueeze(0).to(device)
 
     with torch.no_grad():
         logits = model._forward_logits(x)

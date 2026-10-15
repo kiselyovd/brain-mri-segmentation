@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from brain_mri_segmentation.data.preprocessing import build_hf_processor
 from brain_mri_segmentation.inference.predict import load_model
 
 
@@ -13,9 +14,10 @@ def main() -> None:
     parser.add_argument("--checkpoint", default="artifacts/checkpoints/best.ckpt")
     parser.add_argument("--out", default="artifacts/hf_export")
     parser.add_argument(
-        "--base-model",
-        default="nvidia/segformer-b2-finetuned-ade-512-512",
-        help="HF base model ID to copy preprocessor from.",
+        "--image-size",
+        type=int,
+        default=256,
+        help="Training input size; never copy upstream normalization into this export.",
     )
     args = parser.parse_args()
 
@@ -36,10 +38,7 @@ def main() -> None:
 
     backbone.save_pretrained(out)
 
-    if args.base_model:
-        from transformers import AutoImageProcessor
-
-        AutoImageProcessor.from_pretrained(args.base_model).save_pretrained(out)
+    build_hf_processor(args.image_size).save_pretrained(out)
 
     print(f"Exported HF-native model to {out}")
 

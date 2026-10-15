@@ -1,4 +1,4 @@
 # @package _global_
 experiment_name: baseline
 model:
-  name: unet
+  name: unet_small

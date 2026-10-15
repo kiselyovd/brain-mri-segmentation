@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Please cite this software and separately credit the original LGG MRI dataset and SegFormer architecture."
+type: software
+title: "Brain MRI segmentation: source-backed evaluation of SegFormer-B2"
+authors:
+  - family-names: Kiselyov
+    given-names: Daniil
+repository-code: "https://github.com/kiselyovd/brain-mri-segmentation"
+url: "https://kiselyovd.github.io/brain-mri-segmentation/"
+license: MIT
+references:
+  - type: data
+    title: "LGG MRI segmentation dataset"
+    authors:
+      - family-names: Buda
+        given-names: Mateusz
+    url: "https://www.kaggle.com/datasets/mateuszbuda/lgg-mri-segmentation"
+    license: CC-BY-NC-SA-4.0

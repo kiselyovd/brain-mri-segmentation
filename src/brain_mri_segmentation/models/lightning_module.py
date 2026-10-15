@@ -5,7 +5,8 @@ from __future__ import annotations
 import lightning as L
 import torch
 from torch import nn, optim
-from torchmetrics.segmentation import DiceScore, MeanIoU
+
+from ..evaluation.metrics import ForegroundOverlap
 
 
 class SegmentationModule(L.LightningModule):
@@ -19,8 +20,10 @@ class SegmentationModule(L.LightningModule):
         super().__init__()
         self.model = model
         self.criterion = nn.CrossEntropyLoss() if num_classes > 1 else nn.BCEWithLogitsLoss()
-        self.dice = DiceScore(num_classes=num_classes)
-        self.iou = MeanIoU(num_classes=num_classes)
+        if num_classes != 2:
+            raise ValueError("This project evaluates two-class foreground/background segmentation")
+        self.dice = ForegroundOverlap("dice")
+        self.iou = ForegroundOverlap("iou")
         self.save_hyperparameters(ignore=["model"])
 
     def _forward_logits(self, x: torch.Tensor) -> torch.Tensor:

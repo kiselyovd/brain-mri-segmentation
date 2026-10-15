@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import logging
+import os
 import sys
 
 import structlog
 
 
-def configure_logging(level: str = "INFO", json_output: bool = False) -> None:
+def configure_logging(level: str | None = None, json_output: bool = False) -> None:
+    level = level or os.environ.get("LOG_LEVEL", "INFO")
     logging.basicConfig(format="%(message)s", stream=sys.stdout, level=level.upper())
     processors: list = [
         structlog.contextvars.merge_contextvars,

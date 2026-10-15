@@ -10,6 +10,8 @@ from PIL import Image
 from torch.utils.data import Dataset
 from torchvision.transforms import v2
 
+from .preprocessing import image_tensor
+
 
 class SegmentationDataset(Dataset):
     def __init__(self, split_dir: Path | str, image_size: int = 256, augment: bool = False) -> None:
@@ -28,13 +30,11 @@ class SegmentationDataset(Dataset):
         img = Image.open(img_path).convert("RGB")
         mask = Image.open(mask_path).convert("L")
 
-        img_arr = np.asarray(img, dtype=np.float32) / 255.0
         mask_arr = (np.asarray(mask, dtype=np.uint8) > 0).astype(np.int64)
 
-        img_t = torch.from_numpy(img_arr).permute(2, 0, 1)
+        img_t = image_tensor(img, self.image_size)
         mask_t = torch.from_numpy(mask_arr)
 
-        img_t = v2.Resize((self.image_size, self.image_size), antialias=True)(img_t)
         mask_t = v2.Resize(
             (self.image_size, self.image_size),
             interpolation=v2.InterpolationMode.NEAREST,

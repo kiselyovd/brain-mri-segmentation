@@ -62,6 +62,8 @@ nav:
   - Training: training.md
   - Serving: serving.md
   - Benchmarks: BENCHMARKS.md
+  - Evaluation contract: EVALUATION.md
+  - Component licenses: LICENSES.md
   - Reproducibility: REPRODUCIBILITY.md
   - Limitations: LIMITATIONS.md
   - API reference: api.md

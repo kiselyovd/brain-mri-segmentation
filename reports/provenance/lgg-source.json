@@ -1,0 +1,14 @@
+{
+  "source": "https://www.kaggle.com/api/v1/datasets/download/mateuszbuda/lgg-mri-segmentation",
+  "sha256": "cac105de01272f0ca28dc56178f8d164a7df85d118a5b4baca388d6bcb4e854e",
+  "bytes": 748584920,
+  "retrieved_utc": "2026-10-15T10:01:48.184919+00:00",
+  "dataset_version": "407317",
+  "source_page": "https://www.kaggle.com/datasets/mateuszbuda/lgg-mri-segmentation",
+  "license": "CC-BY-NC-SA-4.0",
+  "license_source": "https://www.kaggle.com/datasets/mateuszbuda/lgg-mri-segmentation/metadata",
+  "duplicated_trees_equal": true,
+  "canonical_files": 7860,
+  "canonical_file_manifest_sha256": "0634197b387c666c780aa72fe8a8c0af90388cf4fa254c9141f245d0a4b5ef68",
+  "attribution": "Mateusz Buda; TCIA/TCGA-LGG; original LGG MRI segmentation dataset"
+}
