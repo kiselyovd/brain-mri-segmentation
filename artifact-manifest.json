@@ -44,7 +44,7 @@
     "scope": "Foreground scores pool confusion counts across all test pixels. Historical checkpoint training membership is unverified; this is not an independently established held-out benchmark or a replay of the missing U-Net baseline. Patient-macro Dice: see the full report.",
     "training_membership_verified": false,
     "report": "reports/replay-segformer-2026-10-15.json",
-    "report_sha256": "8d82222af46c12de55a68963a2f9a3ce75c8d3375955c43f61eb352163e1ec12",
+    "report_sha256": "f9ad41097f709744cec5315d513df5b4f5e54f80ee6061fe99a8cca0a2647a23",
     "metrics": [
       {
         "name": "Foreground Dice",

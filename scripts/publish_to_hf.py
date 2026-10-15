@@ -93,6 +93,7 @@ def render_model_card(
     out_path.write_text(
         tpl.render(metrics_table=_format_metrics(metrics), **extra),
         encoding="utf-8",
+        newline="\n",
     )
 
 

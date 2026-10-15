@@ -27,7 +27,9 @@ def fixture(root: Path) -> dict:
 
 def test_committed_contract_and_prediction_arrays() -> None:
     manifest, values = contract.validate(ROOT)
-    report = json.loads((ROOT / manifest["evaluation"]["report"]).read_text())
+    report_path = ROOT / manifest["evaluation"]["report"]
+    assert b"\r" not in report_path.read_bytes()
+    report = json.loads(report_path.read_text())
     arrays = ROOT / "reports" / report["prediction_arrays"]["file"]
     assert contract.digest(arrays) == report["prediction_arrays"]["sha256"]
     with np.load(arrays, allow_pickle=False) as archive:

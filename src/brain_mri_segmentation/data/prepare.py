@@ -106,7 +106,7 @@ def prepare_data(
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, destination)
     (out / "split-manifest.json").write_text(
-        json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
+        json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     log.info(
         "prepare_data.done",

@@ -202,7 +202,7 @@ def main() -> None:
         "patients": patients,
         "slices": slices,
     }
-    out.write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
+    out.write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8", newline="\n")
     log.info("evaluation.done", slices=len(slices), metrics=metrics["global_foreground"])
 
 
