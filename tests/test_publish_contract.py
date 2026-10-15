@@ -3,6 +3,7 @@
 import hashlib
 import importlib
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -60,6 +61,8 @@ def test_prepare_has_no_authentication_or_unreviewed_files(tmp_path: Path, monke
     card = (output / "README.md").read_text(encoding="utf-8")
     assert "88.08%" in card
     assert "license: other" in card
+    license_name = re.search(r"^license_name: (.+)$", card, re.M)
+    assert license_name and re.fullmatch(r"[a-z0-9.-]+", license_name[1])
     assert "model-index:" not in card
     assert "48c79adfde8b063e74737357ab20a6f7f67a0b1b" in card
 
