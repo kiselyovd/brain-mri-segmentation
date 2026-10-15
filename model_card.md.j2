@@ -1,0 +1,64 @@
+---
+license: other
+license_name: segformer-lgg-component-terms
+license_link: "https://github.com/kiselyovd/brain-mri-segmentation/blob/main/docs/LICENSES.md"
+library_name: transformers
+pipeline_tag: image-segmentation
+base_model: nvidia/segformer-b2-finetuned-ade-512-512
+tags:
+  - medical-imaging
+  - brain-mri
+  - semantic-segmentation
+  - pytorch
+---
+
+# Brain MRI Segmentation
+
+A SegFormer-B2 model for FLAIR-abnormality masks on 2D LGG MRI slices. Native safetensors weights, an explicit foreground evaluation contract and original-source split identities are available in the [source repository]({{ github_url }}).
+
+{{ artifact_contract }}
+
+The result is a new replay with recorded model and data hashes. The historical checkpoint's training membership is unverified. The original hand-rolled U-Net checkpoint has not been recovered, so there is no corrected historical main-versus-baseline comparison. [Legacy reports]({{ github_url }}/blob/main/docs/BENCHMARKS.md) retain the old aggregates separately.
+
+## Run the model
+
+Use Transformers 5.5.4 or the project's locked environment, including torchvision.
+
+```python
+import numpy as np
+import torch
+from PIL import Image
+from transformers import AutoImageProcessor, AutoModelForSemanticSegmentation
+
+REPO = "{{ repo_id }}"
+REVISION = "{{ artifact_revision }}"
+processor = AutoImageProcessor.from_pretrained(
+    REPO, revision=REVISION, backend="torchvision", trust_remote_code=False
+)
+model = AutoModelForSemanticSegmentation.from_pretrained(
+    REPO, revision=REVISION, use_safetensors=True, trust_remote_code=False
+).eval()
+image = Image.open("slice.tif").convert("RGB")
+# Float32 RGB [0,255] avoids uint8 rounding during tensor resizing.
+inputs = processor(np.asarray(image, dtype=np.float32), return_tensors="pt")
+with torch.inference_mode():
+    logits = model(**inputs).logits
+    logits = torch.nn.functional.interpolate(
+        logits, size=(256, 256), mode="bilinear", align_corners=False
+    )
+    mask = logits.argmax(dim=1)[0]
+```
+
+The processor uses 256² inputs, rescaling 1/255, no ImageNet normalization and no label reduction. Actual predictions matched the repository path on eight committed TIF samples and one seeded nonsquare image: zero disagreeing mask pixels. [Numerical parity receipt]({{ github_url }}/blob/main/reports/provenance/processor-parity.json). This verifies computation paths rather than quality on unseen patients. The output mask corresponds to the resized input.
+
+## Original data and protocol
+
+[Mateusz Buda's LGG MRI dataset](https://www.kaggle.com/datasets/mateuszbuda/lgg-mri-segmentation) contains 110 TCGA-LGG patients and 3929 image/mask pairs. The three stored image channels represent MRI sequences; missing sequences are substituted as documented by the dataset author. A slice's binary mask labels FLAIR abnormality.
+
+The original source archive was retrieved and hashed. Running the sorted-patient/seed 42 preparation recipe recovers 3133/409/387 slices and 88/11/11 patients. [Source receipt]({{ github_url }}/blob/main/reports/provenance/lgg-source.json) · [Complete split manifest]({{ github_url }}/blob/main/reports/provenance/lgg-split-manifest.json) · [Evaluation contract]({{ github_url }}/blob/main/docs/EVALUATION.md).
+
+Foreground Dice/IoU pool TP/FP/FN over all test pixels. Empty prediction and target score 1; false positives on an empty target score 0. The full report contains patient-macro measures, patient-cluster bootstrap intervals, per-slice/patient counts and prediction/target arrays. The limited cohort, 2D input and unresolved historical training lineage limit interpretation; clinical validation has not been performed.
+
+## Component licenses and attribution
+
+Original project code is MIT. Dataset material and the source-derived manifest carry CC-BY-NC-SA-4.0 terms and attribution to Mateusz Buda and TCIA/TCGA-LGG. The upstream SegFormer card labels its license `other` and links NVIDIA's research/evaluation license; no independent unrestricted-MIT grant is asserted for the fine-tuned weights. [Component details]({{ github_url }}/blob/main/docs/LICENSES.md) · [Software citation]({{ github_url }}/blob/main/CITATION.cff).
