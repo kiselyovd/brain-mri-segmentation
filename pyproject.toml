@@ -135,7 +135,7 @@ color = true
 
 [tool.deptry]
 extend_exclude = ["notebooks", "tests"]
-known_first_party = ["brain_mri_segmentation"]
+known_first_party = ["brain_mri_segmentation", "artifact_manifest"]
 # DEP004: dependency-groups (serving, tracking, docs) are intentional optional installs
 ignore = ["DEP004"]
 

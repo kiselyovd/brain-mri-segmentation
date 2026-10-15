@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "project": "brain-mri-segmentation",
+  "hub": {
+    "repo_id": "kiselyovd/brain-mri-segmentation",
+    "repo_type": "model",
+    "revision": "48c79adfde8b063e74737357ab20a6f7f67a0b1b",
+    "files": [
+      {
+        "path": "model.safetensors",
+        "role": "weights",
+        "sha256": "b8e0816e76ee1f849ad37b119fc42647beba5072e842db958b848b0673dedfa4"
+      },
+      {
+        "path": "preprocessor_config.json",
+        "role": "processor",
+        "sha256": "f7efd9c9f332e4311455ef37c2da164b84a4a89f262479cfe495b054876a7e7d"
+      },
+      {
+        "path": "config.json",
+        "role": "config",
+        "sha256": "f946165de98c3b962f07e3f4a7108ab74388806ec03dc974b507d70a44d8c676"
+      }
+    ]
+  },
+  "inference": {
+    "library": "transformers",
+    "input": "RGB float32 [0,255] array; native torchvision processor; resize256; rescale1/255; no normalization",
+    "output": "2-class logits; upsample256 bilinear align_corners=False then argmax",
+    "labels": {
+      "0": "background",
+      "1": "tumor"
+    }
+  },
+  "dataset": {
+    "source": "https://www.kaggle.com/datasets/mateuszbuda/lgg-mri-segmentation",
+    "source_receipt": "reports/provenance/lgg-source.json",
+    "split_manifest": "reports/provenance/lgg-split-manifest.json",
+    "split_records_sha256": "8ea724f07ee8667c29411ce6758063c715bb6d0b6a67cd4e3cbebf38774d5391"
+  },
+  "evaluation": {
+    "status": "replayed_reconstructed",
+    "label": "Replayed on the reconstructed original patient split \u00b7 387 slices / 11 patients",
+    "scope": "Foreground scores pool confusion counts across all test pixels. Historical checkpoint training membership is unverified; this is not an independently established held-out benchmark or a replay of the missing U-Net baseline. Patient-macro Dice: see the full report.",
+    "training_membership_verified": false,
+    "report": "reports/replay-segformer-2026-10-15.json",
+    "report_sha256": "8d82222af46c12de55a68963a2f9a3ce75c8d3375955c43f61eb352163e1ec12",
+    "metrics": [
+      {
+        "name": "Foreground Dice",
+        "pointer": "/global_foreground/dice"
+      },
+      {
+        "name": "Foreground IoU",
+        "pointer": "/global_foreground/iou"
+      }
+    ]
+  },
+  "licenses": {
+    "code": {
+      "id": "MIT",
+      "path": "LICENSE"
+    },
+    "dataset": {
+      "id": "CC-BY-NC-SA-4.0",
+      "source": "https://www.kaggle.com/datasets/mateuszbuda/lgg-mri-segmentation/metadata"
+    },
+    "base_model": {
+      "id": "other",
+      "source": "https://github.com/NVlabs/SegFormer/blob/master/LICENSE"
+    },
+    "weights": {
+      "id": "other",
+      "details": "docs/LICENSES.md"
+    }
+  }
+}

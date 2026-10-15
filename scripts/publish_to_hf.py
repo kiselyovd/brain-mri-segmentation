@@ -9,6 +9,7 @@ import shutil
 import tempfile
 from pathlib import Path
 
+from artifact_manifest import digest, local_path, render, validate
 from huggingface_hub import HfApi
 from jinja2 import Environment, FileSystemLoader
 
@@ -104,7 +105,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Publish trained artifacts to HuggingFace Hub.")
     parser.add_argument("--repo-id", default="kiselyovd/brain-mri-segmentation")
     parser.add_argument("--artifacts", default="artifacts")
-    parser.add_argument("--metrics", default="reports/metrics.json")
+    parser.add_argument("--metrics", default=None)
+    parser.add_argument(
+        "--prepare-only", type=Path, help="Write the reviewed payload without publishing"
+    )
     parser.add_argument("--template", default="docs/model_card.md.j2")
     parser.add_argument("--tag", default=None)
     parser.add_argument(
@@ -155,13 +159,18 @@ def main() -> None:
         help="Directory produced by export_hf_native.py; contents copied to HF repo root.",
     )
     args = parser.parse_args()
+    manifest, values = validate(Path.cwd())
+    if args.repo_id != manifest["hub"]["repo_id"]:
+        raise SystemExit("Target differs from the reviewed artifact manifest")
 
     artifacts_dir = Path(args.artifacts)
     if not artifacts_dir.exists():
         raise SystemExit(f"Artifacts dir not found: {artifacts_dir}")
 
     metrics: dict = {}
-    metrics_path = Path(args.metrics)
+    metrics_path = Path(args.metrics or manifest["evaluation"]["report"])
+    if metrics_path.resolve() != Path(manifest["evaluation"]["report"]).resolve():
+        raise SystemExit("The reviewed manifest defines the canonical evaluation report")
     if metrics_path.exists():
         metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
 
@@ -182,30 +191,27 @@ def main() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
 
-        for item in artifacts_dir.rglob("*"):
-            if not item.is_file():
-                continue
-            rel = item.relative_to(artifacts_dir)
-            # Skip Lightning checkpoints (unusable by from_pretrained) and the
-            # hf_export/ subtree (its contents are flattened to the repo root
-            # by the dedicated loop below, so uploading them here would create
-            # a redundant hf_export/ copy on the Hub).
-            if item.suffix == ".ckpt":
-                continue
-            if rel.parts and rel.parts[0] == Path(args.hf_export).name:
-                continue
-            dest = tmp_path / rel
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            dest.write_bytes(item.read_bytes())
-
         hf_export_dir = Path(args.hf_export)
-        if hf_export_dir.is_dir():
-            for item in hf_export_dir.rglob("*"):
-                if item.is_file():
-                    rel = item.relative_to(hf_export_dir)
-                    dest = tmp_path / rel
-                    dest.parent.mkdir(parents=True, exist_ok=True)
-                    dest.write_bytes(item.read_bytes())
+        for artifact in manifest["hub"]["files"]:
+            item = local_path(hf_export_dir, artifact["path"])
+            if digest(item) != artifact["sha256"]:
+                raise SystemExit(f"Export differs from reviewed manifest: {artifact['path']}")
+            dest = local_path(tmp_path, artifact["path"])
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(item, dest)
+        metadata_paths = [
+            "artifact-manifest.json",
+            manifest["evaluation"]["report"],
+            manifest["dataset"]["source_receipt"],
+            manifest["dataset"]["split_manifest"],
+            "reports/provenance/processor-parity.json",
+        ]
+        report = json.loads(Path(manifest["evaluation"]["report"]).read_text(encoding="utf-8"))
+        metadata_paths.append(f"reports/{report['prediction_arrays']['file']}")
+        for name in metadata_paths:
+            item, dest = local_path(Path.cwd(), name), local_path(tmp_path, name)
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(item, dest)
 
         if args.widget_sources:
             widget_dir = Path(args.widget_sources)
@@ -233,21 +239,41 @@ def main() -> None:
             hf_dataset=args.hf_dataset,
             widget_examples=widget_examples,
             metric_results=_metric_results_from(
-                args.metrics,
+                str(metrics_path),
                 args.pipeline_tag,
                 dataset_name,
                 args.hf_dataset,
             ),
+            artifact_contract=render(manifest, values),
+            artifact_revision=manifest["hub"]["revision"],
         )
 
+        if args.prepare_only:
+            shutil.copytree(tmp_path, args.prepare_only)
+            print(f"Prepared only; no Hub write: {args.prepare_only}")
+            return
         api = HfApi(token=os.environ.get("HF_TOKEN"))
-        api.create_repo(repo_id=args.repo_id, exist_ok=True)
+        if api.whoami()["name"] != "kiselyovd":
+            raise SystemExit("HF owner guard failed: expected kiselyovd")
+        before = api.model_info(args.repo_id)
+        if before.id != "kiselyovd/brain-mri-segmentation":
+            raise SystemExit("Unexpected target model repository")
         commit_message = f"Release {args.tag}" if args.tag else "Upload artifacts"
-        api.upload_folder(
+        commit = api.upload_folder(
             repo_id=args.repo_id,
             folder_path=str(tmp_path),
             commit_message=commit_message,
+            parent_commit=before.sha,
         )
+        after = api.model_info(args.repo_id, revision=commit.oid, files_metadata=True)
+        if after.siblings is None:
+            raise SystemExit("Published file metadata is unavailable")
+        remote = {f.rfilename: f for f in after.siblings}
+        for artifact in manifest["hub"]["files"]:
+            if artifact["role"] == "weights":
+                lfs = remote[artifact["path"]].lfs
+                if lfs is None or lfs.sha256 != artifact["sha256"]:
+                    raise SystemExit("Published weight hash differs from reviewed artifact")
 
     print(f"Published to https://huggingface.co/{args.repo_id}")
 

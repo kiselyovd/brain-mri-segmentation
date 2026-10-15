@@ -1,6 +1,6 @@
 # Reproducibility
 
-These commands document the current pipeline. The legacy reports lack sufficient lineage for a claim of identical reproduced results.
+The original Kaggle cohort has been recovered with a source receipt and hashed patient/slice manifest. A new native-weight replay is recorded separately from the legacy reports; see the [evaluation contract and commands](EVALUATION.md). This verifies the new run without establishing the historical checkpoint's training membership.
 
 **Legacy reported aggregates — metric-definition audit pending.** Stored values are retained for traceability, not as verified performance claims. The Dice/IoU definitions, checkpoint/config lineage and per-patient evaluation manifest need reconciliation before comparisons.
 
@@ -46,4 +46,4 @@ uv run python -m brain_mri_segmentation.training.train +experiment=sota
 uv run python -m brain_mri_segmentation.evaluation.evaluate --checkpoint artifacts/checkpoints/best.ckpt --out reports/metrics.json
 ```
 
-The commands generate a new evaluation record. Recovery of the legacy numbers or a ±1% tolerance is not established. Archive the checkpoint/config/data hashes and the patient/slice manifest with the new report; see [the audit requirements](BENCHMARKS.md).
+The evaluator now requires a hash-verified split manifest and writes model/code/data identities, confusion counts and prediction/target arrays. Preparation requires an empty output destination, apart from `.gitkeep`. Recovery of the missing historical U-Net checkpoint and legacy metric definitions remains unresolved; a new training run is a separate experiment.

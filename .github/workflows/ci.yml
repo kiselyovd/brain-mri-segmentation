@@ -26,6 +26,10 @@ jobs:
         run: uv run ruff check .
       - name: Ruff format
         run: uv run ruff format --check .
+      - name: Artifact contract and README drift
+        run: |
+          python scripts/artifact_manifest.py --check
+          python scripts/artifact_manifest.py --check --document docs/index.md
       - name: Mypy
         run: uv run mypy src scripts
       - name: Deptry

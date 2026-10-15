@@ -9,14 +9,14 @@ Research and education only; the repository does not provide clinical validation
 - The source is the Buda LGG/TCGA dataset: a limited low-grade-glioma cohort, not a representative clinical population.
 - The model processes individual 2D slices, without a 3D volumetric or longitudinal context.
 - Preparation code uses a patient-level split. The stored metric files do not record the complete patient/slice manifest or checkpoint lineage of the legacy runs.
-- Input processing matters: repository inference scales RGB to [0, 1] and resizes the tensor to 256×256. The published HF processor has a different configuration; see the native loading example in the README.
+- Input processing matters: repository inference scales RGB to [0, 1] and resizes the tensor to 256×256. The corrected native HF processor is tested against this path; use the pinned loading recipe and float32 RGB arrays described in the README.
 - The API returns a binary mask. No calibrated uncertainty or externally validated operating point is published.
 
 ## Qualitative examples
 
 The published panel contains selected tumor-bearing samples. `make_plots.py` prefers `data/sample`; `build_sample_data.py` defaults to a training source. A recorded split/patient manifest for that panel is absent, so it must not be presented as held-out test proof.
 
-Small lesions, ambiguous boundaries, image/sequence shift and slices without tumor are relevant cases to inspect. The current aggregate report does not quantify those failure categories or a confidence interval. Claims of specific architecture gains, expected future improvements or ±3pp intervals are unsupported by these artifacts.
+Small lesions, ambiguous boundaries, image/sequence shift and slices without tumor are relevant cases to inspect. The new replay includes per-slice/patient counts and patient-cluster bootstrap intervals conditional on the reconstructed cohort. It does not measure external population shift or establish architecture gains. The legacy aggregate reports do not provide those uncertainty estimates.
 
 ## Before interpreting quality
 

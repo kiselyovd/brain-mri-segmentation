@@ -1,4 +1,10 @@
-# Legacy benchmark records
+# Evaluation records
+
+The corrected replay is recorded in [replay-segformer-2026-10-15.json](https://github.com/kiselyovd/brain-mri-segmentation/blob/main/reports/replay-segformer-2026-10-15.json). Its result block is generated from the artifact manifest in the [README](https://github.com/kiselyovd/brain-mri-segmentation#current-artifact-and-evaluation) and documentation home page. It evaluates the published main weights on the reconstructed original 387-slice/11-patient split; historical training membership is unverified.
+
+See the [explicit foreground metric contract, source receipt and processor parity](EVALUATION.md). The original baseline checkpoint is still absent, so a corrected historical comparison is unavailable.
+
+## Legacy benchmark records
 
 **Legacy reported aggregates — metric-definition audit pending.** Stored values are retained for traceability, not as verified performance claims. The Dice/IoU definitions, checkpoint/config lineage and per-patient evaluation manifest need reconciliation before comparisons.
 
@@ -17,6 +23,6 @@ Values remain in their original fields; they have not been swapped or recomputed
 - Original patient/slice evaluation manifest and mask/prediction arrays.
 - Shared foreground labels, threshold, empty-mask handling and aggregation definitions.
 - Patient-level uncertainty estimates computed from those arrays, rather than guessed confidence intervals.
-- Recorded preprocessing: the repository uses 256×256 and [0, 1]; the exported HF processor currently specifies a different size and normalization.
+- Recorded preprocessing: the repository uses 256×256 and [0, 1]; the corrected native processor is pinned and tested against that tensor transform. The pre-fix revisions retain their original different configuration.
 
 [Reproduction commands](REPRODUCIBILITY.md) document the workflow, without promising recovery of the old numbers. [Limitations](LIMITATIONS.md) separates known source limits from unmeasured failure rates.

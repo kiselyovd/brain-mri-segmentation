@@ -1,0 +1,99 @@
+{
+  "repo_id": "kiselyovd/brain-mri-segmentation",
+  "revision": "48c79adfde8b063e74737357ab20a6f7f67a0b1b",
+  "torch": "2.8.0+cpu",
+  "cases": "8 committed sample TIFs and 1 seeded nonsquare synthetic image; numerical comparison, not evaluation",
+  "input_contract": "RGB float32 array in [0,255]; torchvision backend",
+  "results": [
+    {
+      "case": 0,
+      "input_size": [
+        256,
+        256
+      ],
+      "tensor_max_abs_error": 5.960464477539063e-08,
+      "logits_max_abs_error": 3.337860107421875e-06,
+      "prediction_disagreement_pixels": 0
+    },
+    {
+      "case": 1,
+      "input_size": [
+        256,
+        256
+      ],
+      "tensor_max_abs_error": 5.960464477539063e-08,
+      "logits_max_abs_error": 4.76837158203125e-06,
+      "prediction_disagreement_pixels": 0
+    },
+    {
+      "case": 2,
+      "input_size": [
+        256,
+        256
+      ],
+      "tensor_max_abs_error": 5.960464477539063e-08,
+      "logits_max_abs_error": 5.245208740234375e-06,
+      "prediction_disagreement_pixels": 0
+    },
+    {
+      "case": 3,
+      "input_size": [
+        256,
+        256
+      ],
+      "tensor_max_abs_error": 5.960464477539063e-08,
+      "logits_max_abs_error": 5.245208740234375e-06,
+      "prediction_disagreement_pixels": 0
+    },
+    {
+      "case": 4,
+      "input_size": [
+        256,
+        256
+      ],
+      "tensor_max_abs_error": 2.9802322387695312e-08,
+      "logits_max_abs_error": 3.337860107421875e-06,
+      "prediction_disagreement_pixels": 0
+    },
+    {
+      "case": 5,
+      "input_size": [
+        256,
+        256
+      ],
+      "tensor_max_abs_error": 5.960464477539063e-08,
+      "logits_max_abs_error": 2.86102294921875e-06,
+      "prediction_disagreement_pixels": 0
+    },
+    {
+      "case": 6,
+      "input_size": [
+        256,
+        256
+      ],
+      "tensor_max_abs_error": 5.960464477539063e-08,
+      "logits_max_abs_error": 3.814697265625e-06,
+      "prediction_disagreement_pixels": 0
+    },
+    {
+      "case": 7,
+      "input_size": [
+        256,
+        256
+      ],
+      "tensor_max_abs_error": 3.725290298461914e-09,
+      "logits_max_abs_error": 2.86102294921875e-06,
+      "prediction_disagreement_pixels": 0
+    },
+    {
+      "case": 8,
+      "input_size": [
+        173,
+        91
+      ],
+      "tensor_max_abs_error": 1.7881393432617188e-07,
+      "logits_max_abs_error": 3.814697265625e-06,
+      "prediction_disagreement_pixels": 0
+    }
+  ]
+}

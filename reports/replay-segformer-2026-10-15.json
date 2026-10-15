@@ -1,0 +1,5277 @@
+{
+  "schema_version": 1,
+  "status": "replayed_on_reconstructed_original_split",
+  "training_membership_verified": false,
+  "artifact": {
+    "kind": "native_safetensors",
+    "repo_id": "kiselyovd/brain-mri-segmentation",
+    "revision": "838da0dff1f96aa3b87d56d2099f2b86dec483bc",
+    "sha256": "b8e0816e76ee1f849ad37b119fc42647beba5072e842db958b848b0673dedfa4"
+  },
+  "source_revision": "2233e90de688693cf59fdf8be4635c52b83439ce",
+  "source_files_sha256": {
+    "__init__.py": "a29b552cffe65457bb47525a012f1101d17aa4b3c3f77f289171fe168fcce861",
+    "__main__.py": "78a396ff85c8a87d536efcb2c808bdc37f5d5b68a84942cff260b5228053dacc",
+    "data/__init__.py": "544bfb6332afff05047793e6ffb108380285367c096f7ffea803563a0644d55a",
+    "data/datamodule.py": "3c42011f0bfae34ec7d5f709402565f14fdcb2470bf8b5606b349b644c9a34ad",
+    "data/dataset.py": "12cdbbbbf47775caa65eed12cccfc3ce24953f1b69d3f0bd098512c485f1da48",
+    "data/prepare.py": "352131ba53afe69c6786a645edccabc69a9de5ffb238b43715677a6acfec8ec1",
+    "data/preprocessing.py": "d70ab80740bf1d37e025f6b1fa4366df6f99b84ff32f73f0539ba4438939bb76",
+    "evaluation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evaluation/evaluate.py": "1054e5be8cc97c6e3fba529c3dd10ebf16c6d56077c5c9c65ea3ce26a8dabf97",
+    "evaluation/metrics.py": "10bc90a901ca24c2d06223f44ba1397ddaebca5e39edc50f173cff6ec1f07f5d",
+    "evaluation/replay.py": "2d550673e4a75014c86c5f15e9210d079b35fc2ba2ced3f80ea75b4fcde7bb1b",
+    "inference/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "inference/predict.py": "fe0d9303398c704ba2c1be3b7da4f772f4eb92976ed9de22f3034d9df6421645",
+    "models/__init__.py": "ff8d9e3b7ae7a923b8411f44d9e9cfa27fc1519720542b4840b0841ea92da1d2",
+    "models/factory.py": "45a4b2f3bb8efaac7fc7d039a459b779bf722f6f25768ae0f8f46caf29952550",
+    "models/lightning_module.py": "2d14f27a948fed148b7344b14c5396f1798cbcd0f06815a80c306bda17d5a3c6",
+    "models/unet.py": "fe177673da9f8a4d310b7c2102945e57bfe1f20bd5fcf55b231ab23acf760636",
+    "serving/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "serving/dependencies.py": "85f032e2880871928e8b2ae216abd931de8f36deaceedf47c755deafd06d52cb",
+    "serving/errors.py": "c5295cf4bc5671aecdf9acc3adec6dbd455f130aa8b7fad31b4d9039f84feed4",
+    "serving/main.py": "840b8a79f6049ccbc101ca5774276c40742ee58b8824c558a9734929ebed632e",
+    "serving/routes.py": "be90f2780d9f4b582183d73967f9c676ea32a45e639fe18e103f23b4b6be265b",
+    "serving/schemas.py": "86b35077a5fa308f92f5aaea3543254b3ffad870a17bd0e88958b41499466665",
+    "training/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "training/train.py": "2963f03b28fc60331910b46980ac49d464d9ba49bab254eec5aae863185eae18",
+    "utils/__init__.py": "f6df006af8d15539b763f2850ebd995c621afa3d19f6d20d3172c7861ad62aa5",
+    "utils/hf_hub.py": "b4738bc72656d43d806e6e9312cbbd1584518fd31796c9b65cb81139a62f4101",
+    "utils/logging.py": "1e9995a494dbf50d89ad5ad0f311050a2272bcd6439f87b9cc6a417f2ed59f48",
+    "utils/seed.py": "985b19a5049af713ba35d07e69c1aa3352617e8485f3003439805da0b3ae6d09"
+  },
+  "metric_contract": {
+    "version": "binary-foreground-global-v1",
+    "foreground": 1,
+    "input": "binary integer masks [B,H,W] after logits upsampling and argmax",
+    "aggregation": "sum TP/FP/FN/TN over the entire evaluated cohort before division",
+    "empty_target_and_prediction": "Dice=1, IoU=1",
+    "empty_target_with_positive_prediction": "Dice=0, IoU=0",
+    "patient_macro": "unweighted mean of per-patient pooled foreground overlap"
+  },
+  "preprocessing": {
+    "size": 256,
+    "input": "RGB float32/255",
+    "resize": "torchvision tensor bilinear antialias",
+    "normalize": false
+  },
+  "split_records_sha256": "8ea724f07ee8667c29411ce6758063c715bb6d0b6a67cd4e3cbebf38774d5391",
+  "prediction_arrays": {
+    "file": "replay-segformer-2026-10-15.npz",
+    "sha256": "fc84c65412120472fefef51fec45f99986888aea4e8a606249f30cbb59f5447d"
+  },
+  "packages": {
+    "torch": "2.8.0",
+    "torchvision": "0.23.0",
+    "transformers": "5.5.4",
+    "torchmetrics": "1.9.0",
+    "numpy": "2.5.4"
+  },
+  "device": "cpu",
+  "test_size": 387,
+  "test_patients": 11,
+  "counts_order": [
+    "TP",
+    "FP",
+    "FN",
+    "TN"
+  ],
+  "counts": [
+    248480,
+    23921,
+    43312,
+    25046719
+  ],
+  "global_foreground": {
+    "dice": 0.8808333318562974,
+    "iou": 0.787043929138173,
+    "pixel_accuracy": 0.9973491106846536
+  },
+  "patient_macro": {
+    "dice": 0.8514292934686218,
+    "iou": 0.7590277736125676,
+    "pixel_accuracy": 0.9973828242279429
+  },
+  "patient_bootstrap": {
+    "method": "patient cluster bootstrap; pooled foreground; percentile 95%",
+    "seed": 42,
+    "repeats": 2000,
+    "intervals": {
+      "dice": [
+        0.8025119457589254,
+        0.9151282855062102
+      ],
+      "iou": [
+        0.6701627986777154,
+        0.8435359457959282
+      ]
+    }
+  },
+  "patients": [
+    {
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        27132,
+        5311,
+        978,
+        1277299
+      ],
+      "dice": 0.8961405710699718,
+      "iou": 0.8118249005116543,
+      "pixel_accuracy": 0.9952018737792969
+    },
+    {
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        7359,
+        575,
+        658,
+        1302128
+      ],
+      "dice": 0.922700771111529,
+      "iou": 0.8564944134078212,
+      "pixel_accuracy": 0.9990592956542969
+    },
+    {
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        6121,
+        264,
+        1102,
+        1827521
+      ],
+      "dice": 0.899617871840094,
+      "iou": 0.8175504207292641,
+      "pixel_accuracy": 0.9992555890764508
+    },
+    {
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        15566,
+        1844,
+        880,
+        2603150
+      ],
+      "dice": 0.9195415879017014,
+      "iou": 0.8510661563696009,
+      "pixel_accuracy": 0.9989608764648438
+    },
+    {
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        15384,
+        538,
+        3015,
+        3454471
+      ],
+      "dice": 0.8964773753678505,
+      "iou": 0.812377884564609,
+      "pixel_accuracy": 0.9989770853294516
+    },
+    {
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        78760,
+        8639,
+        3704,
+        3578913
+      ],
+      "dice": 0.9273355586560934,
+      "iou": 0.8645159873988781,
+      "pixel_accuracy": 0.9966367994035993
+    },
+    {
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        59761,
+        4139,
+        8534,
+        3859726
+      ],
+      "dice": 0.9041340444041001,
+      "iou": 0.8250407267305409,
+      "pixel_accuracy": 0.996777089436849
+    },
+    {
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        20869,
+        1328,
+        10012,
+        1933871
+      ],
+      "dice": 0.786352160970647,
+      "iou": 0.6479244931540874,
+      "pixel_accuracy": 0.994232177734375
+    },
+    {
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        2730,
+        383,
+        385,
+        1307222
+      ],
+      "dice": 0.8766859344894027,
+      "iou": 0.7804459691252144,
+      "pixel_accuracy": 0.9994140625
+    },
+    {
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        9625,
+        583,
+        2029,
+        1822771
+      ],
+      "dice": 0.880523282407831,
+      "iou": 0.7865489907657105,
+      "pixel_accuracy": 0.9985765729631696
+    },
+    {
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        5173,
+        317,
+        12015,
+        2079647
+      ],
+      "dice": 0.45621306993562044,
+      "iou": 0.2955155669808626,
+      "pixel_accuracy": 0.9941196441650391
+    }
+  ],
+  "slices": [
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_1.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_10.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        5984,
+        250,
+        205,
+        59097
+      ],
+      "dice": 0.9633743862191098,
+      "iou": 0.9293368535486877,
+      "pixel_accuracy": 0.9930572509765625
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_11.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        5066,
+        1209,
+        112,
+        59149
+      ],
+      "dice": 0.8846590412992229,
+      "iou": 0.7931736339439487,
+      "pixel_accuracy": 0.9798431396484375
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_12.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        3723,
+        647,
+        188,
+        60978
+      ],
+      "dice": 0.8991667672986354,
+      "iou": 0.8168056164984643,
+      "pixel_accuracy": 0.9872589111328125
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_13.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        1478,
+        763,
+        31,
+        63264
+      ],
+      "dice": 0.7882666666666667,
+      "iou": 0.6505281690140845,
+      "pixel_accuracy": 0.987884521484375
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_14.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        390,
+        313,
+        52,
+        64781
+      ],
+      "dice": 0.6812227074235808,
+      "iou": 0.5165562913907285,
+      "pixel_accuracy": 0.9944305419921875
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_15.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        0,
+        54,
+        0,
+        65482
+      ],
+      "dice": 0.0,
+      "iou": 0.0,
+      "pixel_accuracy": 0.999176025390625
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_16.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_17.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_18.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_19.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_2.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_20.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        0,
+        50,
+        0,
+        65486
+      ],
+      "dice": 0.0,
+      "iou": 0.0,
+      "pixel_accuracy": 0.999237060546875
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_3.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_4.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_5.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_6.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        423,
+        110,
+        70,
+        64933
+      ],
+      "dice": 0.8245614035087719,
+      "iou": 0.7014925373134329,
+      "pixel_accuracy": 0.99725341796875
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_7.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        1015,
+        458,
+        9,
+        64054
+      ],
+      "dice": 0.8129755706848217,
+      "iou": 0.684885290148448,
+      "pixel_accuracy": 0.9928741455078125
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_8.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        3406,
+        1129,
+        22,
+        60979
+      ],
+      "dice": 0.8554564862489011,
+      "iou": 0.7474215492648673,
+      "pixel_accuracy": 0.9824371337890625
+    },
+    {
+      "image": "TCGA_CS_4944_20010208/TCGA_CS_4944_20010208_9.tif",
+      "patient": "TCGA_CS_4944_20010208",
+      "counts": [
+        5647,
+        328,
+        289,
+        59272
+      ],
+      "dice": 0.948199143648728,
+      "iou": 0.901500638569604,
+      "pixel_accuracy": 0.9905853271484375
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_1.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_10.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        222,
+        15,
+        121,
+        65178
+      ],
+      "dice": 0.7655172413793103,
+      "iou": 0.6201117318435754,
+      "pixel_accuracy": 0.9979248046875
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_11.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        857,
+        83,
+        31,
+        64565
+      ],
+      "dice": 0.937636761487965,
+      "iou": 0.88259526261586,
+      "pixel_accuracy": 0.998260498046875
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_12.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        1301,
+        73,
+        69,
+        64093
+      ],
+      "dice": 0.9482507288629738,
+      "iou": 0.9015939015939016,
+      "pixel_accuracy": 0.997833251953125
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_13.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        1639,
+        60,
+        126,
+        63711
+      ],
+      "dice": 0.9463048498845266,
+      "iou": 0.8980821917808219,
+      "pixel_accuracy": 0.997161865234375
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_14.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        1519,
+        103,
+        46,
+        63868
+      ],
+      "dice": 0.9532475682459993,
+      "iou": 0.9106714628297362,
+      "pixel_accuracy": 0.9977264404296875
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_15.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        1171,
+        21,
+        98,
+        64246
+      ],
+      "dice": 0.9516456724908574,
+      "iou": 0.9077519379844962,
+      "pixel_accuracy": 0.9981842041015625
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_16.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        560,
+        204,
+        29,
+        64743
+      ],
+      "dice": 0.827790096082779,
+      "iou": 0.7061790668348046,
+      "pixel_accuracy": 0.9964447021484375
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_17.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        90,
+        6,
+        138,
+        65302
+      ],
+      "dice": 0.5555555555555556,
+      "iou": 0.38461538461538464,
+      "pixel_accuracy": 0.997802734375
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_18.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_19.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_2.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_20.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_3.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_4.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_5.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_6.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_7.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_8.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6667_20011105/TCGA_CS_6667_20011105_9.tif",
+      "patient": "TCGA_CS_6667_20011105",
+      "counts": [
+        0,
+        10,
+        0,
+        65526
+      ],
+      "dice": 0.0,
+      "iou": 0.0,
+      "pixel_accuracy": 0.999847412109375
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_1.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_10.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_11.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_12.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_13.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_14.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        7,
+        0,
+        65529
+      ],
+      "dice": 0.0,
+      "iou": 0.0,
+      "pixel_accuracy": 0.9998931884765625
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_15.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        384,
+        1,
+        285,
+        64866
+      ],
+      "dice": 0.7286527514231499,
+      "iou": 0.573134328358209,
+      "pixel_accuracy": 0.995635986328125
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_16.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        1205,
+        17,
+        164,
+        64150
+      ],
+      "dice": 0.9301428020069471,
+      "iou": 0.8694083694083694,
+      "pixel_accuracy": 0.9972381591796875
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_17.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        1506,
+        72,
+        107,
+        63851
+      ],
+      "dice": 0.9439047320589157,
+      "iou": 0.8937685459940653,
+      "pixel_accuracy": 0.9972686767578125
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_18.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        1477,
+        87,
+        132,
+        63840
+      ],
+      "dice": 0.9309801449732115,
+      "iou": 0.870872641509434,
+      "pixel_accuracy": 0.9966583251953125
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_19.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        1153,
+        17,
+        216,
+        64150
+      ],
+      "dice": 0.9082315872390705,
+      "iou": 0.8318903318903319,
+      "pixel_accuracy": 0.9964447021484375
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_2.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_20.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        358,
+        33,
+        188,
+        64957
+      ],
+      "dice": 0.7641408751334045,
+      "iou": 0.6183074265975821,
+      "pixel_accuracy": 0.9966278076171875
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_21.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        38,
+        30,
+        10,
+        65458
+      ],
+      "dice": 0.6551724137931034,
+      "iou": 0.48717948717948717,
+      "pixel_accuracy": 0.9993896484375
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_22.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_23.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_24.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_25.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_26.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_27.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_28.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_3.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_4.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_5.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_6.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_7.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_8.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_CS_6668_20011025/TCGA_CS_6668_20011025_9.tif",
+      "patient": "TCGA_CS_6668_20011025",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_1.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_10.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_11.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_12.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        268,
+        35,
+        91,
+        65142
+      ],
+      "dice": 0.8096676737160121,
+      "iou": 0.6802030456852792,
+      "pixel_accuracy": 0.998077392578125
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_13.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        613,
+        83,
+        230,
+        64610
+      ],
+      "dice": 0.7966211825860948,
+      "iou": 0.661987041036717,
+      "pixel_accuracy": 0.9952239990234375
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_14.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        1348,
+        114,
+        73,
+        64001
+      ],
+      "dice": 0.9351370100589663,
+      "iou": 0.8781758957654723,
+      "pixel_accuracy": 0.9971466064453125
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_15.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        1822,
+        113,
+        120,
+        63481
+      ],
+      "dice": 0.9399019860717049,
+      "iou": 0.88661800486618,
+      "pixel_accuracy": 0.9964447021484375
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_16.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        1777,
+        173,
+        30,
+        63556
+      ],
+      "dice": 0.9459675272824062,
+      "iou": 0.8974747474747474,
+      "pixel_accuracy": 0.9969024658203125
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_17.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        1844,
+        130,
+        41,
+        63521
+      ],
+      "dice": 0.9556880020730759,
+      "iou": 0.915136476426799,
+      "pixel_accuracy": 0.9973907470703125
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_18.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        1877,
+        293,
+        22,
+        63344
+      ],
+      "dice": 0.9225854018186287,
+      "iou": 0.8562956204379562,
+      "pixel_accuracy": 0.9951934814453125
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_19.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        2018,
+        330,
+        14,
+        63174
+      ],
+      "dice": 0.9214611872146119,
+      "iou": 0.8543607112616427,
+      "pixel_accuracy": 0.9947509765625
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_2.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_20.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        1778,
+        236,
+        35,
+        63487
+      ],
+      "dice": 0.9291873530180298,
+      "iou": 0.8677403611517813,
+      "pixel_accuracy": 0.9958648681640625
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_21.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        1165,
+        129,
+        64,
+        64178
+      ],
+      "dice": 0.9235037653586999,
+      "iou": 0.8578792341678939,
+      "pixel_accuracy": 0.9970550537109375
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_22.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        826,
+        70,
+        68,
+        64572
+      ],
+      "dice": 0.9229050279329609,
+      "iou": 0.8568464730290456,
+      "pixel_accuracy": 0.997894287109375
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_23.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        230,
+        138,
+        33,
+        65135
+      ],
+      "dice": 0.7290015847860539,
+      "iou": 0.57356608478803,
+      "pixel_accuracy": 0.9973907470703125
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_24.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        59,
+        65477
+      ],
+      "dice": 0.0,
+      "iou": 0.0,
+      "pixel_accuracy": 0.9990997314453125
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_25.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_26.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_27.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_28.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_29.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_3.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_30.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_31.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_32.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_33.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_34.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_35.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_36.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_37.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_38.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_39.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_4.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_40.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_5.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_6.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_7.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_8.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_5851_19950428/TCGA_DU_5851_19950428_9.tif",
+      "patient": "TCGA_DU_5851_19950428",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_1.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_10.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_11.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_12.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_13.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_14.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_15.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_16.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_17.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_18.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_19.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_2.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_20.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_21.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_22.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_23.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_24.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_25.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_26.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_27.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_28.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_29.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        175,
+        0,
+        318,
+        65043
+      ],
+      "dice": 0.5239520958083832,
+      "iou": 0.35496957403651114,
+      "pixel_accuracy": 0.995147705078125
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_3.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_30.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        915,
+        52,
+        141,
+        64428
+      ],
+      "dice": 0.9045971329708354,
+      "iou": 0.825812274368231,
+      "pixel_accuracy": 0.9970550537109375
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_31.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        1240,
+        82,
+        150,
+        64064
+      ],
+      "dice": 0.9144542772861357,
+      "iou": 0.842391304347826,
+      "pixel_accuracy": 0.9964599609375
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_32.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        1283,
+        21,
+        530,
+        63702
+      ],
+      "dice": 0.823227462303497,
+      "iou": 0.6995637949836423,
+      "pixel_accuracy": 0.9915924072265625
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_33.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        1612,
+        24,
+        279,
+        63621
+      ],
+      "dice": 0.9140912957187411,
+      "iou": 0.8417754569190601,
+      "pixel_accuracy": 0.9953765869140625
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_34.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        1572,
+        24,
+        348,
+        63592
+      ],
+      "dice": 0.89419795221843,
+      "iou": 0.808641975308642,
+      "pixel_accuracy": 0.99432373046875
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_35.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        1610,
+        42,
+        312,
+        63572
+      ],
+      "dice": 0.9009513150531617,
+      "iou": 0.8197556008146639,
+      "pixel_accuracy": 0.994598388671875
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_36.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        1628,
+        43,
+        192,
+        63673
+      ],
+      "dice": 0.9326840446863363,
+      "iou": 0.8738593666129898,
+      "pixel_accuracy": 0.9964141845703125
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_37.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        1447,
+        54,
+        175,
+        63860
+      ],
+      "dice": 0.9266730707652898,
+      "iou": 0.8633651551312649,
+      "pixel_accuracy": 0.9965057373046875
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_38.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        1196,
+        41,
+        146,
+        64153
+      ],
+      "dice": 0.9274912756882513,
+      "iou": 0.8647866955892987,
+      "pixel_accuracy": 0.9971466064453125
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_39.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        1010,
+        49,
+        87,
+        64390
+      ],
+      "dice": 0.9369202226345084,
+      "iou": 0.881326352530541,
+      "pixel_accuracy": 0.9979248046875
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_4.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_40.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        797,
+        84,
+        45,
+        64610
+      ],
+      "dice": 0.9251305861868834,
+      "iou": 0.8606911447084233,
+      "pixel_accuracy": 0.9980316162109375
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_41.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        598,
+        17,
+        51,
+        64870
+      ],
+      "dice": 0.9462025316455697,
+      "iou": 0.8978978978978979,
+      "pixel_accuracy": 0.99896240234375
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_42.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        276,
+        5,
+        96,
+        65159
+      ],
+      "dice": 0.8453292496171516,
+      "iou": 0.7320954907161804,
+      "pixel_accuracy": 0.9984588623046875
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_43.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        25,
+        0,
+        108,
+        65403
+      ],
+      "dice": 0.31645569620253167,
+      "iou": 0.18796992481203006,
+      "pixel_accuracy": 0.99835205078125
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_44.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        37,
+        65499
+      ],
+      "dice": 0.0,
+      "iou": 0.0,
+      "pixel_accuracy": 0.9994354248046875
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_45.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_46.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_47.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_48.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_49.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_5.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_50.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_51.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_52.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_53.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_6.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_7.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_8.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6404_19850629/TCGA_DU_6404_19850629_9.tif",
+      "patient": "TCGA_DU_6404_19850629",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_1.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_10.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_11.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_12.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_13.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_14.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_15.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_16.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_17.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_18.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_19.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_2.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_20.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        37,
+        0,
+        65499
+      ],
+      "dice": 0.0,
+      "iou": 0.0,
+      "pixel_accuracy": 0.9994354248046875
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_21.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        134,
+        307,
+        46,
+        65049
+      ],
+      "dice": 0.43156199677938806,
+      "iou": 0.2751540041067762,
+      "pixel_accuracy": 0.9946136474609375
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_22.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        206,
+        270,
+        24,
+        65036
+      ],
+      "dice": 0.5835694050991501,
+      "iou": 0.412,
+      "pixel_accuracy": 0.995513916015625
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_23.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        324,
+        242,
+        76,
+        64894
+      ],
+      "dice": 0.6708074534161491,
+      "iou": 0.5046728971962616,
+      "pixel_accuracy": 0.995147705078125
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_24.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        969,
+        382,
+        243,
+        63942
+      ],
+      "dice": 0.7561451424112369,
+      "iou": 0.6079046424090339,
+      "pixel_accuracy": 0.9904632568359375
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_25.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        1889,
+        366,
+        226,
+        63055
+      ],
+      "dice": 0.8645308924485126,
+      "iou": 0.7613865376864167,
+      "pixel_accuracy": 0.990966796875
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_26.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        2716,
+        318,
+        347,
+        62155
+      ],
+      "dice": 0.8909299655568312,
+      "iou": 0.8033126293995859,
+      "pixel_accuracy": 0.9898529052734375
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_27.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        3582,
+        427,
+        260,
+        61267
+      ],
+      "dice": 0.9124952235384027,
+      "iou": 0.8390723822909346,
+      "pixel_accuracy": 0.9895172119140625
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_28.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        4685,
+        296,
+        76,
+        60479
+      ],
+      "dice": 0.9618148224183946,
+      "iou": 0.9264385999604509,
+      "pixel_accuracy": 0.99432373046875
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_29.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        4952,
+        266,
+        121,
+        60197
+      ],
+      "dice": 0.9623943251384706,
+      "iou": 0.9275145158269339,
+      "pixel_accuracy": 0.9940948486328125
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_3.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_30.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        5085,
+        394,
+        142,
+        59915
+      ],
+      "dice": 0.9499346161031198,
+      "iou": 0.9046433019035759,
+      "pixel_accuracy": 0.9918212890625
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_31.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        5315,
+        468,
+        87,
+        59666
+      ],
+      "dice": 0.9503799731783639,
+      "iou": 0.9054514480408858,
+      "pixel_accuracy": 0.9915313720703125
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_32.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        5109,
+        697,
+        36,
+        59694
+      ],
+      "dice": 0.9330654734727423,
+      "iou": 0.8745292707976721,
+      "pixel_accuracy": 0.9888153076171875
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_33.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        4945,
+        379,
+        201,
+        60011
+      ],
+      "dice": 0.944603629417383,
+      "iou": 0.8950226244343892,
+      "pixel_accuracy": 0.99114990234375
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_34.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        4740,
+        515,
+        107,
+        60174
+      ],
+      "dice": 0.9384280340526628,
+      "iou": 0.8839985080193957,
+      "pixel_accuracy": 0.990509033203125
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_35.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        4530,
+        323,
+        86,
+        60597
+      ],
+      "dice": 0.9568064209525821,
+      "iou": 0.9171897145171087,
+      "pixel_accuracy": 0.9937591552734375
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_36.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        4379,
+        323,
+        79,
+        60755
+      ],
+      "dice": 0.9561135371179039,
+      "iou": 0.9159171721397197,
+      "pixel_accuracy": 0.993865966796875
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_37.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        4129,
+        546,
+        90,
+        60771
+      ],
+      "dice": 0.9284911176073758,
+      "iou": 0.866526757607555,
+      "pixel_accuracy": 0.99029541015625
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_38.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        3668,
+        314,
+        148,
+        61406
+      ],
+      "dice": 0.940754039497307,
+      "iou": 0.888135593220339,
+      "pixel_accuracy": 0.992950439453125
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_39.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        3316,
+        250,
+        216,
+        61754
+      ],
+      "dice": 0.9343477035784729,
+      "iou": 0.8767847699629826,
+      "pixel_accuracy": 0.992889404296875
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_4.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_40.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        3098,
+        291,
+        161,
+        61986
+      ],
+      "dice": 0.9320096269554753,
+      "iou": 0.8726760563380281,
+      "pixel_accuracy": 0.99310302734375
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_41.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        2993,
+        279,
+        86,
+        62178
+      ],
+      "dice": 0.9425287356321839,
+      "iou": 0.8913043478260869,
+      "pixel_accuracy": 0.9944305419921875
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_42.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        2670,
+        224,
+        73,
+        62569
+      ],
+      "dice": 0.9473124002128792,
+      "iou": 0.8998988877654196,
+      "pixel_accuracy": 0.9954681396484375
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_43.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        2247,
+        65,
+        430,
+        62794
+      ],
+      "dice": 0.9007817197835237,
+      "iou": 0.8194748358862144,
+      "pixel_accuracy": 0.9924468994140625
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_44.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        1434,
+        388,
+        75,
+        63639
+      ],
+      "dice": 0.8610027018913239,
+      "iou": 0.7559304164470216,
+      "pixel_accuracy": 0.9929351806640625
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_45.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        1034,
+        110,
+        118,
+        64274
+      ],
+      "dice": 0.9006968641114983,
+      "iou": 0.8193343898573693,
+      "pixel_accuracy": 0.99652099609375
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_46.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        454,
+        151,
+        42,
+        64889
+      ],
+      "dice": 0.8247048138056312,
+      "iou": 0.7017001545595054,
+      "pixel_accuracy": 0.9970550537109375
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_47.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        157,
+        11,
+        108,
+        65260
+      ],
+      "dice": 0.7251732101616628,
+      "iou": 0.5688405797101449,
+      "pixel_accuracy": 0.9981842041015625
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_48.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_49.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_5.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_50.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_51.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_52.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_53.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_54.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_55.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_56.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_6.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_7.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_8.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_6408_19860521/TCGA_DU_6408_19860521_9.tif",
+      "patient": "TCGA_DU_6408_19860521",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_1.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_10.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_11.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_12.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_13.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_14.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_15.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_16.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_17.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_18.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_19.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_2.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_20.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_21.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_22.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        89,
+        18,
+        193,
+        65236
+      ],
+      "dice": 0.45758354755784064,
+      "iou": 0.2966666666666667,
+      "pixel_accuracy": 0.9967803955078125
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_23.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        277,
+        18,
+        413,
+        64828
+      ],
+      "dice": 0.5624365482233502,
+      "iou": 0.3912429378531073,
+      "pixel_accuracy": 0.9934234619140625
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_24.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        737,
+        35,
+        401,
+        64363
+      ],
+      "dice": 0.7717277486910995,
+      "iou": 0.6283034953111679,
+      "pixel_accuracy": 0.99334716796875
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_25.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        1335,
+        61,
+        227,
+        63913
+      ],
+      "dice": 0.9026369168356998,
+      "iou": 0.822550831792976,
+      "pixel_accuracy": 0.99560546875
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_26.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        1334,
+        160,
+        239,
+        63803
+      ],
+      "dice": 0.8699054450603195,
+      "iou": 0.7697634160415464,
+      "pixel_accuracy": 0.9939117431640625
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_27.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        1865,
+        85,
+        276,
+        63310
+      ],
+      "dice": 0.9117575164996333,
+      "iou": 0.8378256963162624,
+      "pixel_accuracy": 0.9944915771484375
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_28.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        2201,
+        61,
+        406,
+        62868
+      ],
+      "dice": 0.9040870815362497,
+      "iou": 0.8249625187406296,
+      "pixel_accuracy": 0.9928741455078125
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_29.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        2011,
+        207,
+        572,
+        62746
+      ],
+      "dice": 0.8377421370547803,
+      "iou": 0.7207885304659498,
+      "pixel_accuracy": 0.9881134033203125
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_3.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_30.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        1886,
+        221,
+        340,
+        63089
+      ],
+      "dice": 0.8705285021924763,
+      "iou": 0.7707396812423376,
+      "pixel_accuracy": 0.9914398193359375
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_31.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        2046,
+        179,
+        426,
+        62885
+      ],
+      "dice": 0.8711943793911007,
+      "iou": 0.7717842323651453,
+      "pixel_accuracy": 0.9907684326171875
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_32.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        2377,
+        201,
+        370,
+        62588
+      ],
+      "dice": 0.8927699530516432,
+      "iou": 0.8063093622795116,
+      "pixel_accuracy": 0.9912872314453125
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_33.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        2157,
+        285,
+        198,
+        62896
+      ],
+      "dice": 0.8993120700437773,
+      "iou": 0.8170454545454545,
+      "pixel_accuracy": 0.9926300048828125
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_34.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        2371,
+        190,
+        362,
+        62613
+      ],
+      "dice": 0.8957310162448054,
+      "iou": 0.8111529250769757,
+      "pixel_accuracy": 0.9915771484375
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_35.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        3372,
+        156,
+        491,
+        61517
+      ],
+      "dice": 0.9124611013394669,
+      "iou": 0.8390146802687236,
+      "pixel_accuracy": 0.9901275634765625
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_36.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        3703,
+        71,
+        503,
+        61259
+      ],
+      "dice": 0.9280701754385965,
+      "iou": 0.8657937806873978,
+      "pixel_accuracy": 0.991241455078125
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_37.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        3332,
+        506,
+        77,
+        61621
+      ],
+      "dice": 0.9195529184490134,
+      "iou": 0.8510855683269476,
+      "pixel_accuracy": 0.9911041259765625
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_38.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        3492,
+        220,
+        358,
+        61466
+      ],
+      "dice": 0.9235651943930178,
+      "iou": 0.8579852579852579,
+      "pixel_accuracy": 0.991180419921875
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_39.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        3432,
+        352,
+        412,
+        61340
+      ],
+      "dice": 0.8998426848453067,
+      "iou": 0.8179218303145853,
+      "pixel_accuracy": 0.98834228515625
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_4.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_40.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        3491,
+        311,
+        226,
+        61508
+      ],
+      "dice": 0.9285809283149355,
+      "iou": 0.8666832174776564,
+      "pixel_accuracy": 0.9918060302734375
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_41.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        3360,
+        318,
+        210,
+        61648
+      ],
+      "dice": 0.9271523178807947,
+      "iou": 0.8641975308641975,
+      "pixel_accuracy": 0.991943359375
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_42.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        3121,
+        123,
+        100,
+        62192
+      ],
+      "dice": 0.9655065738592421,
+      "iou": 0.9333133971291866,
+      "pixel_accuracy": 0.9965972900390625
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_43.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        2772,
+        90,
+        143,
+        62531
+      ],
+      "dice": 0.9596676475679419,
+      "iou": 0.9224625623960067,
+      "pixel_accuracy": 0.9964447021484375
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_44.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        2459,
+        18,
+        352,
+        62707
+      ],
+      "dice": 0.9300302571860817,
+      "iou": 0.8692117355956168,
+      "pixel_accuracy": 0.994354248046875
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_45.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        2172,
+        38,
+        244,
+        63082
+      ],
+      "dice": 0.9390402075226978,
+      "iou": 0.8850855745721271,
+      "pixel_accuracy": 0.995697021484375
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_46.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        1849,
+        23,
+        357,
+        63307
+      ],
+      "dice": 0.9068170671897989,
+      "iou": 0.8295199641094662,
+      "pixel_accuracy": 0.99420166015625
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_47.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        1179,
+        28,
+        197,
+        64132
+      ],
+      "dice": 0.9128919860627178,
+      "iou": 0.8397435897435898,
+      "pixel_accuracy": 0.9965667724609375
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_48.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        840,
+        27,
+        238,
+        64431
+      ],
+      "dice": 0.8637532133676092,
+      "iou": 0.7601809954751131,
+      "pixel_accuracy": 0.9959564208984375
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_49.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        318,
+        58,
+        123,
+        65037
+      ],
+      "dice": 0.7784577723378213,
+      "iou": 0.6372745490981964,
+      "pixel_accuracy": 0.9972381591796875
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_5.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_50.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        92,
+        61,
+        20,
+        65363
+      ],
+      "dice": 0.6943396226415094,
+      "iou": 0.5317919075144508,
+      "pixel_accuracy": 0.9987640380859375
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_51.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        91,
+        3,
+        60,
+        65382
+      ],
+      "dice": 0.7428571428571429,
+      "iou": 0.5909090909090909,
+      "pixel_accuracy": 0.9990386962890625
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_52.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        15,
+        0,
+        65521
+      ],
+      "dice": 0.0,
+      "iou": 0.0,
+      "pixel_accuracy": 0.9997711181640625
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_53.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_54.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_55.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_56.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_57.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_58.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_59.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_6.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_60.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_7.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_8.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_DU_7014_19860618/TCGA_DU_7014_19860618_9.tif",
+      "patient": "TCGA_DU_7014_19860618",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_1.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_10.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_11.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_12.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_13.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_14.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        172,
+        6,
+        420,
+        64938
+      ],
+      "dice": 0.44675324675324674,
+      "iou": 0.28762541806020064,
+      "pixel_accuracy": 0.993499755859375
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_15.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        333,
+        16,
+        1058,
+        64129
+      ],
+      "dice": 0.38275862068965516,
+      "iou": 0.23667377398720682,
+      "pixel_accuracy": 0.983612060546875
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_16.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        520,
+        10,
+        995,
+        64011
+      ],
+      "dice": 0.508557457212714,
+      "iou": 0.34098360655737703,
+      "pixel_accuracy": 0.9846649169921875
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_17.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        1224,
+        48,
+        1056,
+        63208
+      ],
+      "dice": 0.6891891891891891,
+      "iou": 0.5257731958762887,
+      "pixel_accuracy": 0.983154296875
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_18.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        1726,
+        80,
+        870,
+        62860
+      ],
+      "dice": 0.7841890049977283,
+      "iou": 0.6449925261584455,
+      "pixel_accuracy": 0.985504150390625
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_19.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        1845,
+        10,
+        1922,
+        61759
+      ],
+      "dice": 0.656350053361793,
+      "iou": 0.48848292295472595,
+      "pixel_accuracy": 0.97052001953125
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_2.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_20.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        2071,
+        0,
+        1612,
+        61853
+      ],
+      "dice": 0.7198470629127564,
+      "iou": 0.5623133315232147,
+      "pixel_accuracy": 0.97540283203125
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_21.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        2434,
+        42,
+        937,
+        62123
+      ],
+      "dice": 0.8325637078843852,
+      "iou": 0.7131555815997656,
+      "pixel_accuracy": 0.9850616455078125
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_22.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        2282,
+        276,
+        183,
+        62795
+      ],
+      "dice": 0.90862034640653,
+      "iou": 0.8325428675665816,
+      "pixel_accuracy": 0.9929962158203125
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_23.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        1855,
+        126,
+        269,
+        63286
+      ],
+      "dice": 0.9037758830694276,
+      "iou": 0.8244444444444444,
+      "pixel_accuracy": 0.9939727783203125
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_24.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        1688,
+        250,
+        91,
+        63507
+      ],
+      "dice": 0.9082593489373151,
+      "iou": 0.8319369147363234,
+      "pixel_accuracy": 0.9947967529296875
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_25.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        1662,
+        52,
+        152,
+        63670
+      ],
+      "dice": 0.9421768707482994,
+      "iou": 0.8906752411575563,
+      "pixel_accuracy": 0.99688720703125
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_26.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        1445,
+        49,
+        94,
+        63948
+      ],
+      "dice": 0.9528519617540389,
+      "iou": 0.9099496221662469,
+      "pixel_accuracy": 0.9978179931640625
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_27.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        1201,
+        29,
+        210,
+        64096
+      ],
+      "dice": 0.909503975766755,
+      "iou": 0.8340277777777778,
+      "pixel_accuracy": 0.9963531494140625
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_28.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        411,
+        40,
+        143,
+        64942
+      ],
+      "dice": 0.817910447761194,
+      "iou": 0.6919191919191919,
+      "pixel_accuracy": 0.9972076416015625
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_29.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        294,
+        0,
+        65242
+      ],
+      "dice": 0.0,
+      "iou": 0.0,
+      "pixel_accuracy": 0.995513916015625
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_3.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_30.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_4.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_5.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_6.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_7.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_8.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7616_19940813/TCGA_HT_7616_19940813_9.tif",
+      "patient": "TCGA_HT_7616_19940813",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_1.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_10.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_11.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_12.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_13.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_14.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_15.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        50,
+        10,
+        40,
+        65436
+      ],
+      "dice": 0.6666666666666666,
+      "iou": 0.5,
+      "pixel_accuracy": 0.999237060546875
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_16.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        440,
+        115,
+        11,
+        64970
+      ],
+      "dice": 0.8747514910536779,
+      "iou": 0.7773851590106007,
+      "pixel_accuracy": 0.998077392578125
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_17.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        741,
+        86,
+        31,
+        64678
+      ],
+      "dice": 0.926829268292683,
+      "iou": 0.8636363636363636,
+      "pixel_accuracy": 0.9982147216796875
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_18.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        824,
+        73,
+        25,
+        64614
+      ],
+      "dice": 0.9438717067583047,
+      "iou": 0.8937093275488069,
+      "pixel_accuracy": 0.998504638671875
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_19.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        675,
+        99,
+        38,
+        64724
+      ],
+      "dice": 0.9078681909885676,
+      "iou": 0.8312807881773399,
+      "pixel_accuracy": 0.9979095458984375
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_2.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_20.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        240,
+        65296
+      ],
+      "dice": 0.0,
+      "iou": 0.0,
+      "pixel_accuracy": 0.996337890625
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_3.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_4.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_5.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_6.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_7.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_8.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7692_19960724/TCGA_HT_7692_19960724_9.tif",
+      "patient": "TCGA_HT_7692_19960724",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_1.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_10.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        429,
+        27,
+        36,
+        65044
+      ],
+      "dice": 0.9315960912052117,
+      "iou": 0.8719512195121951,
+      "pixel_accuracy": 0.9990386962890625
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_11.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        980,
+        131,
+        172,
+        64253
+      ],
+      "dice": 0.8661069376933275,
+      "iou": 0.7638347622759158,
+      "pixel_accuracy": 0.9953765869140625
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_12.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        1239,
+        63,
+        713,
+        63521
+      ],
+      "dice": 0.7615242778119238,
+      "iou": 0.6148883374689826,
+      "pixel_accuracy": 0.9881591796875
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_13.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        1849,
+        70,
+        333,
+        63284
+      ],
+      "dice": 0.9017312850524263,
+      "iou": 0.8210479573712256,
+      "pixel_accuracy": 0.9938507080078125
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_14.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        1868,
+        85,
+        145,
+        63438
+      ],
+      "dice": 0.9420070600100857,
+      "iou": 0.8903717826501429,
+      "pixel_accuracy": 0.996490478515625
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_15.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        1096,
+        33,
+        130,
+        64277
+      ],
+      "dice": 0.9307855626326964,
+      "iou": 0.8705321683876092,
+      "pixel_accuracy": 0.9975128173828125
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_16.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        829,
+        38,
+        67,
+        64602
+      ],
+      "dice": 0.9404424276800908,
+      "iou": 0.8875802997858673,
+      "pixel_accuracy": 0.9983978271484375
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_17.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        643,
+        62,
+        114,
+        64717
+      ],
+      "dice": 0.8796169630642955,
+      "iou": 0.7851037851037851,
+      "pixel_accuracy": 0.997314453125
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_18.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        401,
+        9,
+        170,
+        64956
+      ],
+      "dice": 0.817533129459735,
+      "iou": 0.6913793103448276,
+      "pixel_accuracy": 0.9972686767578125
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_19.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        32,
+        2,
+        124,
+        65378
+      ],
+      "dice": 0.3368421052631579,
+      "iou": 0.20253164556962025,
+      "pixel_accuracy": 0.998077392578125
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_2.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_20.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_21.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_22.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_23.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_24.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_25.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_26.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_27.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_28.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_3.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_4.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_5.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_6.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_7.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_8.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_7879_19981009/TCGA_HT_7879_19981009_9.tif",
+      "patient": "TCGA_HT_7879_19981009",
+      "counts": [
+        259,
+        63,
+        25,
+        65189
+      ],
+      "dice": 0.8547854785478548,
+      "iou": 0.7463976945244957,
+      "pixel_accuracy": 0.9986572265625
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_1.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_10.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_11.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_12.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_13.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_14.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_15.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        545,
+        64991
+      ],
+      "dice": 0.0,
+      "iou": 0.0,
+      "pixel_accuracy": 0.9916839599609375
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_16.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        50,
+        531,
+        64955
+      ],
+      "dice": 0.0,
+      "iou": 0.0,
+      "pixel_accuracy": 0.9911346435546875
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_17.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        261,
+        11,
+        1227,
+        64037
+      ],
+      "dice": 0.29659090909090907,
+      "iou": 0.1741160773849233,
+      "pixel_accuracy": 0.981109619140625
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_18.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        404,
+        6,
+        838,
+        64288
+      ],
+      "dice": 0.4891041162227603,
+      "iou": 0.32371794871794873,
+      "pixel_accuracy": 0.98712158203125
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_19.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        141,
+        33,
+        1443,
+        63919
+      ],
+      "dice": 0.16040955631399317,
+      "iou": 0.08719851576994433,
+      "pixel_accuracy": 0.97747802734375
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_2.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_20.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        748,
+        1,
+        1555,
+        63232
+      ],
+      "dice": 0.49017038007863695,
+      "iou": 0.3246527777777778,
+      "pixel_accuracy": 0.97625732421875
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_21.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        937,
+        47,
+        566,
+        63986
+      ],
+      "dice": 0.7535182951347005,
+      "iou": 0.604516129032258,
+      "pixel_accuracy": 0.9906463623046875
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_22.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        986,
+        47,
+        627,
+        63876
+      ],
+      "dice": 0.745275888133031,
+      "iou": 0.5939759036144578,
+      "pixel_accuracy": 0.989715576171875
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_23.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        873,
+        31,
+        613,
+        64019
+      ],
+      "dice": 0.7305439330543934,
+      "iou": 0.5754779169413315,
+      "pixel_accuracy": 0.99017333984375
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_24.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        367,
+        0,
+        1003,
+        64166
+      ],
+      "dice": 0.42256764536557284,
+      "iou": 0.2678832116788321,
+      "pixel_accuracy": 0.9846954345703125
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_25.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        33,
+        0,
+        1323,
+        64180
+      ],
+      "dice": 0.047516198704103674,
+      "iou": 0.024336283185840708,
+      "pixel_accuracy": 0.9798126220703125
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_26.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        145,
+        0,
+        782,
+        64609
+      ],
+      "dice": 0.27052238805970147,
+      "iou": 0.15641855447680691,
+      "pixel_accuracy": 0.988067626953125
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_27.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        158,
+        4,
+        675,
+        64699
+      ],
+      "dice": 0.31758793969849247,
+      "iou": 0.18876941457586618,
+      "pixel_accuracy": 0.9896392822265625
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_28.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        8,
+        3,
+        194,
+        65331
+      ],
+      "dice": 0.07511737089201878,
+      "iou": 0.03902439024390244,
+      "pixel_accuracy": 0.9969940185546875
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_29.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        112,
+        17,
+        93,
+        65314
+      ],
+      "dice": 0.6706586826347305,
+      "iou": 0.5045045045045045,
+      "pixel_accuracy": 0.998321533203125
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_3.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_30.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        25,
+        0,
+        65511
+      ],
+      "dice": 0.0,
+      "iou": 0.0,
+      "pixel_accuracy": 0.9996185302734375
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_31.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_32.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_4.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_5.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_6.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        42,
+        0,
+        65494
+      ],
+      "dice": 0.0,
+      "iou": 0.0,
+      "pixel_accuracy": 0.999359130859375
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_7.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_8.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    },
+    {
+      "image": "TCGA_HT_A5RC_19990831/TCGA_HT_A5RC_19990831_9.tif",
+      "patient": "TCGA_HT_A5RC_19990831",
+      "counts": [
+        0,
+        0,
+        0,
+        65536
+      ],
+      "dice": 1.0,
+      "iou": 1.0,
+      "pixel_accuracy": 1.0
+    }
+  ]
+}
