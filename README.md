@@ -4,7 +4,7 @@
 
 Segment FLAIR abnormalities in 2D LGG MRI slices with a fine-tuned SegFormer-B2. The repository includes the training pipeline, a small U-Net implementation, native safetensors weights and a replay with recorded model and data identities.
 
-[![Reference and native predicted masks for two committed MRI samples](docs/images/social-preview.png)](https://kiselyovd.github.io/brain-mri-segmentation/EVALUATION/)
+[![Reference and native predicted masks for two committed MRI samples](docs/images/result-example.png)](https://kiselyovd.github.io/brain-mri-segmentation/EVALUATION/)
 
 <!-- ARTIFACT-OVERVIEW:START -->
 Foreground Dice **88.08%** · Foreground IoU **78.70%**. [Evaluation and scope](https://github.com/kiselyovd/brain-mri-segmentation/blob/main/reports/replay-segformer-2026-10-15.json).
