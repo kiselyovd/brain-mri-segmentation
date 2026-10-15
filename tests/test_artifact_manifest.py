@@ -79,11 +79,11 @@ def test_readme_drift_is_detected_and_repaired(tmp_path: Path, monkeypatch) -> N
     manifest = fixture(tmp_path)
     _, values = contract.validate(tmp_path)
     readme = tmp_path / "README.md"
-    readme.write_text(contract.render(manifest, values), encoding="utf-8")
+    readme.write_text(contract.render_overview(manifest, values) + "\n\n" + contract.render(manifest, values), encoding="utf-8")
     monkeypatch.setattr("sys.argv", ["artifact_manifest", "--root", str(tmp_path), "--check"])
     contract.main()
     readme.write_text(
-        readme.read_text(encoding="utf-8").replace("88.08%", "99.99%"), encoding="utf-8"
+        readme.read_text(encoding="utf-8").replace("88.08%", "99.99%", 1), encoding="utf-8"
     )
     with pytest.raises(ValueError, match="drift"):
         contract.main()

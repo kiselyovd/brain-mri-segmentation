@@ -1,0 +1,20 @@
+{
+  "asset": "docs/images/social-preview.png",
+  "sha256": "ddd8532fb53d9afade43c1df0e918d5b24f3191b11b40d716af7319924c332d4",
+  "width": 1280,
+  "height": 640,
+  "bytes": 501277,
+  "kind": "project evidence composition; no generated model output",
+  "note": "Buda LGG samples (CC BY-NC-SA 4.0); illustrations, not clinical validation or the 387-slice replay",
+  "sources": [
+    {
+      "path": "reports\\provenance\\showcase-selection.json",
+      "sha256": "c8f509988fdce2d9400b441d26ac71edab81de5ec5b80f74c437ba6f15666227"
+    },
+    {
+      "path": "mri-showcase-predictions.npz",
+      "sha256": "32847586ddbcd643af0b5313f0ac4079647d592fede5185c610ff9c352772334"
+    }
+  ],
+  "renderer": "portfolio-integrity-2026-10-15/render_previews.py"
+}

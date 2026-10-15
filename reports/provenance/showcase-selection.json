@@ -1,0 +1,18 @@
+{
+  "kind": "committed sample illustration; not the test benchmark",
+  "selection": "Both nonempty target masks among eight committed sample pairs, ordered by target area",
+  "revision": "48c79adfde8b063e74737357ab20a6f7f67a0b1b",
+  "weights_sha256": "b8e0816e76ee1f849ad37b119fc42647beba5072e842db958b848b0673dedfa4",
+  "examples": [
+    {
+      "image": "data/sample/images/TCGA_DU_6399_19830416_17.tif",
+      "mask": "data/sample/masks/TCGA_DU_6399_19830416_17_mask.tif",
+      "target_area": 1426
+    },
+    {
+      "image": "data/sample/images/TCGA_DU_7298_19910324_14.tif",
+      "mask": "data/sample/masks/TCGA_DU_7298_19910324_14_mask.tif",
+      "target_area": 4091
+    }
+  ]
+}

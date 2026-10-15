@@ -4,6 +4,16 @@
 
 Segment FLAIR abnormalities in 2D LGG MRI slices with a fine-tuned SegFormer-B2. The repository includes the training pipeline, a small U-Net implementation, native safetensors weights and a replay with recorded model and data identities.
 
+[![Reference and native predicted masks for two committed MRI samples](docs/images/social-preview.png)](https://kiselyovd.github.io/brain-mri-segmentation/EVALUATION/)
+
+<!-- ARTIFACT-OVERVIEW:START -->
+Foreground Dice **88.08%** · Foreground IoU **78.70%**. [Evaluation and scope](https://github.com/kiselyovd/brain-mri-segmentation/blob/main/reports/replay-segformer-2026-10-15.json).
+
+**Evidence:** Replayed on the reconstructed original patient split · 387 slices / 11 patients. Foreground scores pool confusion counts across all test pixels. Historical checkpoint training membership is unverified; this is not an independently established held-out benchmark or a replay of the missing U-Net baseline. Patient-macro Dice: see the full report.
+<!-- ARTIFACT-OVERVIEW:END -->
+
+## Evaluation
+
 <!-- ARTIFACT-MANIFEST:START -->
 ### Current artifact and evaluation
 
