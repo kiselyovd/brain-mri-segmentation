@@ -21,6 +21,9 @@ def fixture(root: Path) -> dict:
     report = root / manifest["evaluation"]["report"]
     report.parent.mkdir(parents=True)
     report.write_bytes((ROOT / manifest["evaluation"]["report"]).read_bytes())
+    numerical = json.loads(report.read_text(encoding="utf-8"))
+    arrays = Path("reports") / numerical["prediction_arrays"]["file"]
+    (root / arrays).write_bytes((ROOT / arrays).read_bytes())
     (root / "artifact-manifest.json").write_text(json.dumps(manifest))
     return manifest
 
@@ -107,3 +110,12 @@ def test_unavailable_results_render_without_fake_zero() -> None:
 def test_path_cannot_escape_repository(tmp_path: Path) -> None:
     with pytest.raises(ValueError, match="escapes"):
         contract.local_path(tmp_path, "../outside.json")
+
+
+def test_changed_prediction_arrays_fail(tmp_path: Path) -> None:
+    manifest = fixture(tmp_path)
+    report = json.loads((tmp_path / manifest["evaluation"]["report"]).read_text(encoding="utf-8"))
+    path = tmp_path / "reports" / report["prediction_arrays"]["file"]
+    path.write_bytes(b"altered numerical evidence")
+    with pytest.raises(ValueError, match="Prediction array SHA256"):
+        contract.validate(tmp_path)
